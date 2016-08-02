@@ -15,3 +15,11 @@ def problem(request, problem_id):
     problem = Problem.objects.get(pk=problem_id)
     context = {'problem': problem}
     return render(request, 'problem.html', context)
+
+def submit(request, **kwargs):
+    if 'problem_id' in kwargs.keys():
+        problem = Problem.objects.get(pk=kwargs['problem_id'])
+    else:
+        problem = None
+    context = {'problem': problem}
+    return render(request, 'submit.html', context)

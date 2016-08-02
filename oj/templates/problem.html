@@ -1,2 +1,3 @@
 <h1> {{ problem.title }} </h1>
 <p> {{ problem.description }} <p>
+<input type="button" value="Submit" action="{% url 'submit' problem.id %}">

@@ -1,0 +1,9 @@
+<form method="post">
+{% csrf_token %}
+Problem ID:<input type="text" name="problem_id" value="{% if problem %}{{ problem.id }}{% endif %}"><br />
+Language:<select>
+    <option value=0>C++</option>
+</select><br />
+<textarea rows=30 name="source" cols="70"></textarea><br />
+<input type="submit" value="Submit">
+
