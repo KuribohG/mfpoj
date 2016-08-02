@@ -10,3 +10,8 @@ def problemset(request):
     problem_list = Problem.objects.all()
     context = {'problem_list': problem_list}
     return render(request, 'problemset.html', context)
+
+def problem(request, problem_id):
+    problem = Problem.objects.get(pk=problem_id)
+    context = {'problem': problem}
+    return render(request, 'problem.html', context)

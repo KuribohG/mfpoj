@@ -1,0 +1,3 @@
+{% for problem in problem_list %}
+    <li><a href="{% url 'problem' problem.id %}"> {{ problem.title }} </a></li>
+{% endfor %}
