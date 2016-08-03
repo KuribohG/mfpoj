@@ -78,7 +78,7 @@
 				<h1 align="center"><span class="STYLE1">{{ problem.title }} </span></h1>
 				<p><span class="STYLE2">{{ problem.description }} </span></p>
 				<p align="center">
-					 <a class="btn btn-primary btn-large" href="#">Submit</a>				</p>
+					 <a class="btn btn-primary btn-large" href="{% url 'submit' problem.id %}">Submit</a>				</p>
 		  </div>
 		</div>
 	</div>

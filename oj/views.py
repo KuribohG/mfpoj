@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from .models import Problem
 
 def index(request):
-    return HttpResponse("It works.")
+    return render(request, 'index.html')
+   # return HttpResponse("欢迎来到魔法炮OJ！")
 
 def problemset(request):
     problem_list = Problem.objects.all()
