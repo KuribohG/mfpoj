@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Problem
+from .models import Problem, Submission
 
 def index(request):
     return render(request, 'index.html')
@@ -24,3 +24,11 @@ def submit(request, **kwargs):
         problem = None
     context = {'problem': problem}
     return render(request, 'submit.html', context)
+
+def submitting(request):
+    submission = Submission(
+                     problem=Problem.objects.get(pk=request.POST['problem_id']), 
+                     source=request.POST['source'], 
+                 )
+    submission.save()
+    return HttpResponse('Success')

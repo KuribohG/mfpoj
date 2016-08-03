@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" action="{% url 'submitting' %}">
 {% csrf_token %}
 Problem ID:<input type="text" name="problem_id" value="{% if problem %}{{ problem.id }}{% endif %}"><br />
 Language:<select>
