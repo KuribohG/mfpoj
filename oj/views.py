@@ -32,3 +32,9 @@ def submitting(request):
                  )
     submission.save()
     return HttpResponse('Success')
+
+def login(request):
+    return render(request, 'login.html')
+
+def register(request):
+    return render(request, 'register.html')
