@@ -19,13 +19,25 @@ def judge(waiting):
         output.close()
         os.system("g++ -o /tmp/test /tmp/test.cpp")
         os.system("/tmp/test")
+        return "/tmp/test"
+
+def run_testcases(waiting, exec_file):
+    submission = waiting.submission
+    language = submission.language
+    
+    if language == "C++":
+        for testcase in submission.problem.testcase_set.all():
+        os.system(exec_file + " << " + testcase.input.file.name + " >> /tmp/test.out")
+        #TODO: compare test.out and stdout, return a judge status
+        return "Accepted"
 
 while True:
     waiting_list = Waiting.objects.all()
 
     if waiting_list:
         for waiting in waiting_list:
-            judge(waiting)
+            exec_file = judge(waiting)
+            run_testcases(waiting, exec_file)
             waiting.delete()
     else:
         time.sleep(1)
