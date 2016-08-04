@@ -8,21 +8,20 @@ django.setup()
 
 from oj.models import Waiting
 
+def judge(waiting):
+    submission = waiting.submission
+    language = submission.language
+    source = submission.source
+
+    if language == "C++":
+        output = open("/tmp/test.cpp", 'w')
+        output.write(source)
+        output.close()
+        os.system("g++ -o /tmp/test /tmp/test.cpp")
+        os.system("/tmp/test")
+
 waiting_list = Waiting.objects.all()
 if waiting_list:
     for waiting in waiting_list:
-        waiting_language=waiting.submission.language
-        waiting_source=waiting.submission.source
-        #print(waiting_language)
-        if  waiting_language == "C++" :
-            #print("g++")
-            #print(waiting_source)
-            waiting_output=open("/tmp/test.cpp",'w')
-            waiting_output.write(waiting_source)
-            waiting_output.close()
-            os.system("g++ -o /tmp/test /tmp/test.cpp")
-            os.system("/tmp/test")
-        elif waiting_language == "Python" :
-            #print("Python3")
-            pass
+        judge(waiting)
         waiting.delete()
