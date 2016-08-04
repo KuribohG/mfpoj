@@ -28,9 +28,8 @@ def run_testcases(waiting, exec_file):
     if language == "C++":
         for testcase in submission.problem.testcase_set.all():
             os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out")
-        print(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out")
-        #TODO: compare test.out and stdout, return a judge status
-        return "Accepted"
+            #TODO: compare test.out and stdout, return a judge status
+            return "Accepted"
 
 while True:
     waiting_list = Waiting.objects.all()
