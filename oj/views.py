@@ -46,7 +46,8 @@ def login(request):
             if len(s) == 0 or request.POST['password'] != s[0].password:
                 error_message = "Incorrect username or password."
             else:
-                request.session['username'] = username
+                request.session['username'] = request.POST['username']
+                return HttpResponseRedirect('/')
     context = {'error_message': error_message}
     return render(request, 'login.html', context)
 
@@ -66,6 +67,10 @@ def register(request):
             user.save()
     context = {'error_message': error_message}
     return render(request, 'register.html', context)
+
+def logout(request):
+    del request.session['username']
+    return HttpResponseRedirect('/')
 
 def ranklist(request):
     return render(request, 'ranklist.html')
