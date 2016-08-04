@@ -19,12 +19,16 @@
 
 {% include "header.html"%}
 <body>
+<form action="{% url 'login' %}" method="post">
+{% csrf_token %}
 <h1 align="center" class="STYLE1">Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="text" name="username" />
 </h1>
 <p align="center" class="STYLE1">Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="password" name="password" />
 </p>
-<p align="center" class="STYLE1">  <a class="btn btn-primary btn-large" href="/">Submit</a></p>
+<p align="center" class="STYLE1">  <input type="submit" value="Login" /></p>
+</form>
+<p align="center" class="STYLE1">{{ error_message }}</p>
 </body>
 </html>

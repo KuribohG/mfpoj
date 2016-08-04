@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Problem, Submission, Waiting, User
 
@@ -35,7 +35,20 @@ def submit(request, **kwargs):
     return render(request, 'submit.html', context)
 
 def login(request):
-    return render(request, 'login.html')
+    error_message = ""
+    if request.method == 'POST':
+        if len(request.POST['username']) == 0:
+            error_message = "Empty username."
+        elif len(request.POST['password']) == 0:
+            error_message = "Empty password."
+        else:
+            s = User.objects.filter(username=request.POST['username'])
+            if len(s) == 0 or request.POST['password'] != s[0].password:
+                error_message = "Incorrect username or password."
+            else:
+                request.session['username'] = username
+    context = {'error_message': error_message}
+    return render(request, 'login.html', context)
 
 def register(request):
     error_message = ""
@@ -46,6 +59,8 @@ def register(request):
             error_message = "Empty username."
         elif len(request.POST["password"]) == 0:
             error_message = "Empty password."
+        elif len(User.objects.filter(username=request.POST['username'])):
+            error_message = "This username has been registered."
         else:
             user = User(username=request.POST['username'], password=request.POST['password'])
             user.save()
