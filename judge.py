@@ -18,7 +18,6 @@ def judge(waiting):
         output.write(source)
         output.close()
         os.system("g++ -o /tmp/test /tmp/test.cpp")
-        os.system("/tmp/test")
         return "/tmp/test"
 
 def run_testcases(waiting, exec_file):
