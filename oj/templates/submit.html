@@ -1,9 +1,24 @@
-<form method="post" action="{% url 'submitting' %}">
-{% csrf_token %}
-Problem ID:<input type="text" name="problem_id" value="{% if problem %}{{ problem.id }}{% endif %}"><br />
-Language:<select>
+﻿<style type="text/css">
+<!--
+-->
+</style>
+<link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
+<p>{% include "header.html"%}
+  <form method="post" action="{% url 'submitting' %}">
+{% csrf_token %}</p>
+<p align="center">Problem ID:
+  <input type="text" name="problem_id" value="{% if problem %}{{ problem.id }}{% endif %}">
+  <br />
+  Language:
+  <select>
     <option value=0>C++</option>
-</select><br />
-<textarea rows=30 name="source" cols="70"></textarea><br />
-<input type="submit" value="Submit">
-
+    <option value="1">Pascal</option>
+    <option value="2">Java</option>
+    <option value="3">Python</option>
+    <option value="4">易语言</option>
+          </select>
+  <br />
+  <textarea rows=30 name="source" cols="70"></textarea>
+  <br />
+  <input type="submit" value="Submit">
+</p>
