@@ -13,3 +13,9 @@ class Submission(models.Model):
 
     def __str__(self):
         return self.source
+
+class Waiting(models.Model):
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.submission.source

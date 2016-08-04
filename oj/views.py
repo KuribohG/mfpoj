@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Problem, Submission
+from .models import Problem, Submission, Waiting
 
 def index(request):
     return render(request, 'index.html')
@@ -31,6 +31,8 @@ def submitting(request):
                      source=request.POST['source'], 
                  )
     submission.save()
+    waiting = Waiting(submission=submission)
+    waiting.save()
     return HttpResponse('Success')
 
 def login(request):
