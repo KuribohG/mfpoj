@@ -7,9 +7,17 @@ class Problem(models.Model):
     def __str__(self):
         return self.title
 
+class User(models.Model):
+    username = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.username
+
 class Submission(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     source = models.TextField()
+    language = models.CharField(max_length=15)
 
     def __str__(self):
         return self.source

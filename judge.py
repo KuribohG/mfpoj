@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 import django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mfpoj.settings'
@@ -12,3 +13,5 @@ while True:
     if waiting_list:
         for waiting in waiting_list:
             waiting.delete()
+    else:
+        time.sleep(1)

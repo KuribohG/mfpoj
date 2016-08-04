@@ -10,13 +10,12 @@
   <input type="text" name="problem_id" value="{% if problem %}{{ problem.id }}{% endif %}">
   <br />
   Language:
-  <select>
-    <option value=0>C++</option>
-    <option value="1">Pascal</option>
-    <option value="2">Java</option>
-    <option value="3">Python</option>
-    <option value="4">易语言</option>
-          </select>
+  <select name="language">
+    <option value="C++">C++</option>
+    <option value="Pascal">Pascal</option>
+    <option value="Java">Java</option>
+    <option value="Python">Python</option>
+  </select>
   <br />
   <textarea rows=30 name="source" cols="70"></textarea>
   <br />

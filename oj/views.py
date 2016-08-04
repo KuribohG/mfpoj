@@ -29,6 +29,7 @@ def submitting(request):
     submission = Submission(
                      problem=Problem.objects.get(pk=request.POST['problem_id']), 
                      source=request.POST['source'], 
+                     language=request.POST['language'], 
                  )
     submission.save()
     waiting = Waiting(submission=submission)
