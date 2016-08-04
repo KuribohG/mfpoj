@@ -20,8 +20,12 @@ def judge(waiting):
         os.system("g++ -o /tmp/test /tmp/test.cpp")
         os.system("/tmp/test")
 
-waiting_list = Waiting.objects.all()
-if waiting_list:
-    for waiting in waiting_list:
-        judge(waiting)
-        waiting.delete()
+while True:
+    waiting_list = Waiting.objects.all()
+
+    if waiting_list:
+        for waiting in waiting_list:
+            judge(waiting)
+            waiting.delete()
+    else:
+        time.sleep(1)
