@@ -7,6 +7,17 @@ class Problem(models.Model):
     def __str__(self):
         return self.title
 
+class Testcase(models.Model):
+    def upload_path(instance, filename):
+        return "testcases/{}/{}".format(instance.problem.id, filename)
+
+    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    input = models.FileField(upload_to=upload_path)
+    output = models.FileField(upload_to=upload_path)
+
+    def __str__(self):
+        return self.problem.title
+
 class User(models.Model):
     username = models.CharField(max_length=50)
 
