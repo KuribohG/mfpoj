@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Problem, Submission, Waiting
+from .models import Problem, Submission, Waiting, User
 
 def index(request):
     return render(request, 'index.html')
@@ -38,7 +38,19 @@ def login(request):
     return render(request, 'login.html')
 
 def register(request):
-    return render(request, 'register.html')
+    error_message = ""
+    if request.method == 'POST':
+        if request.POST['password'] != request.POST['password2']:
+            error_message = "Passwords mismatched."
+        elif len(request.POST["username"]) == 0:
+            error_message = "Empty username."
+        elif len(request.POST["password"]) == 0:
+            error_message = "Empty password."
+        else:
+            user = User(username=request.POST['username'], password=request.POST['password'])
+            user.save()
+    context = {'error_message': error_message}
+    return render(request, 'register.html', context)
 
 def ranklist(request):
     return render(request, 'ranklist.html')

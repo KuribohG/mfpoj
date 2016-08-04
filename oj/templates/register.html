@@ -19,6 +19,8 @@
 
 {% include "header.html"%}
 <body>
+<form method="post" action="{% url 'register' %}">
+{% csrf_token %}
 <h1 align="center" class="STYLE1"> Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="text" name="username" />
 </h1>
@@ -28,6 +30,8 @@
 <p align="center" class="STYLE1">Password Again:
   <input type="password" name="password2" />
 </p>
-<p align="center" class="STYLE1">&nbsp;<a class="btn btn-primary btn-large" href="/register">Submit</a></p>
+<p align="center" class="STYLE1">&nbsp;<input type="submit" value="Submit" /></p>
+</form>
+<p align="center" class="STYLE1">{{ error_message }}</p>
 </body>
 </html>
