@@ -5,7 +5,7 @@
 <link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
 <title>提交 - {{problem.id}}</title>
 <p>{% include "header.html"%}
-  <form method="post" action="{% url 'submitting' %}">
+  <form method="post" action="{% url 'submit' %}">
 {% csrf_token %}</p>
 <p align="center">Problem ID:
   <input type="text" name="problem_id" value="{% if problem %}{{ problem.id }}{% endif %}">

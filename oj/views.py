@@ -18,23 +18,21 @@ def problem(request, problem_id):
     return render(request, 'problem.html', context)
 
 def submit(request, **kwargs):
+    if request.method == 'POST':
+        submission = Submission(
+                         problem=Problem.objects.get(pk=request.POST['problem_id']),
+                         source=request.POST['source'],
+                         language=request.POST['language'],
+                     )
+        submission.save()
+        waiting=Waiting(submission=submission)
+        waiting.save()
     if 'problem_id' in kwargs.keys():
         problem = Problem.objects.get(pk=kwargs['problem_id'])
     else:
         problem = None
     context = {'problem': problem}
     return render(request, 'submit.html', context)
-
-def submitting(request):
-    submission = Submission(
-                     problem=Problem.objects.get(pk=request.POST['problem_id']), 
-                     source=request.POST['source'], 
-                     language=request.POST['language'], 
-                 )
-    submission.save()
-    waiting = Waiting(submission=submission)
-    waiting.save()
-    return HttpResponse('Success')
 
 def login(request):
     return render(request, 'login.html')
