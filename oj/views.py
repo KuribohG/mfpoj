@@ -41,3 +41,6 @@ def login(request):
 
 def register(request):
     return render(request, 'register.html')
+
+def ranklist(request):
+    return render(request, 'ranklist.html')
