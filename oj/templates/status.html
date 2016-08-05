@@ -21,10 +21,10 @@
   </tr>
   {% for submission in submission_list %}
   <tr>
-    <td><div align="center">&nbsp;</div></td>
-    <td><div align="center">{{submission.user}}</div></td>
-    <td><div align="center">{{submission.problem}}</div></td>
-    <td><div align="center">&nbsp;</div></td>
+    <td><div align="center">{{submission.id}}</div></td>
+    <td><div align="center">{{submission.user.username}}</div></td>
+    <td><div align="center">{{submission.problem.id}}</div></td>
+    <td><div align="center">{{submission.status}}</div></td>
     <td><div align="center">&nbsp;</div></td>
     <td><div align="center">&nbsp;</div></td>
     <td><div align="center">{{submission.language}}</div></td>
