@@ -107,6 +107,7 @@ def ranklist(request):
 def status(request):
     submission_list = Submission.objects.all()
     submission_list = list(submission_list)[-50:]
+    submission_list.reverse()
     if('username' in request.session.keys()):
         context = {'submission_list': submission_list,'len': len(request.session['username']), 'name': request.session['username']}
     else:
