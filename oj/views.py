@@ -97,8 +97,16 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 def ranklist(request):
+    user_list = User.objects.all()
     if('username' in request.session.keys()):
-        context = {'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'user_list':user_list,'len': len(request.session['username']), 'name': request.session['username']}
     else:
-        context = {'len': 0, 'name': ''}
+        context = {'user_list':user_list,'len': 0, 'name': ''}
     return render(request, 'ranklist.html',context)
+def status(request):
+    submission_list = Submission.objects.all()
+    if('username' in request.session.keys()):
+        context = {'submission_list':submission_list,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'submission_list':submission_list,'len': 0, 'name': ''}
+    return render(request, 'status.html',context)

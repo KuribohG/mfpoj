@@ -1,0 +1,46 @@
+﻿<style type="text/css">
+<!--
+-->
+</style>
+<link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
+{% include "header.html"%}
+<title>提交状态 - 魔法炮OJ</title>
+
+<p>&nbsp;</p>
+ <table width="1023" height="232" border="0">
+  <tr>
+    <td width="66" height="40"><div align="center">RunID</div></td>
+    <td width="166"><div align="center">Username</div></td>
+    <td width="92"><div align="center">Problem</div></td>
+    <td width="107"><div align="center">Result</div></td>
+    <td width="91"><div align="center">Memory</div></td>
+    <td width="116"><div align="center">Time</div></td>
+    <td width="95"><div align="center">Language</div></td>
+    <td width="71"><div align="center">Length</div></td>
+    <td width="161"><div align="center">Submit_Time</div></td>
+  </tr>
+  {% for submission in submission_list %}
+  <tr>
+    <td><div align="center">&nbsp;</div></td>
+    <td><div align="center">{{submission.user}}</div></td>
+    <td><div align="center">{{submission.problem}}</div></td>
+    <td><div align="center">&nbsp;</div></td>
+    <td><div align="center">&nbsp;</div></td>
+    <td><div align="center">&nbsp;</div></td>
+    <td><div align="center">{{submission.language}}</div></td>
+    <td><div align="center">&nbsp;</div></td>
+    <td><div align="center">&nbsp;</div></td>
+  </tr>{% endfor %} 
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
