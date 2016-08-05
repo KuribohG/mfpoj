@@ -31,9 +31,8 @@ def solve_output(f):
             read_string = read_string[:-1]
         read_string = read_string.rstrip()
         res.append(read_string)
-    if res:
-        while res[-1] == '':
-            res.pop()
+    while res and res[-1] == '':
+        res.pop()
     return res
 
 def check_output(input1, input2):
