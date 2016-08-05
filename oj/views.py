@@ -35,6 +35,7 @@ def submit(request, **kwargs):
                              source=request.POST['source'],
                              language=request.POST['language'],
                              user=User.objects.filter(username=request.session['username'])[0], 
+                             status="Pending", 
                          )
             submission.save()
             waiting=Waiting(submission=submission)
