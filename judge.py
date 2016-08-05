@@ -17,9 +17,11 @@ def judge(waiting):
         output = open("/tmp/test.cpp", 'w')
         output.write(source)
         output.close()
-        os.system("g++ -o /tmp/test /tmp/test.cpp")
-        return "/tmp/test"
-
+        judge_CE = os.system("g++ -o /tmp/test /tmp/test.cpp")
+        if judge_CE == 0:
+            return "/tmp/test"
+        else:
+            return "Compile Error"
 def solve_output(f):
     read_in = f.readlines()
     res = []
@@ -43,6 +45,7 @@ def get_status_from_result(result):
     priority = {
         'Wrong Answer': 2, 
         'Accepted': 1, 
+        'Compile Error': 3,
     }
 
     return max(result, key=lambda x: priority[x])
@@ -63,13 +66,29 @@ def run_testcases(waiting, exec_file):
     submission.status = get_status_from_result(result)
     submission.save()
 
+def solve_CE():
+    submission = waiting.submission
+    language = submission.language
+
+    result = []
+    
+    if language == "C++":
+        for testcase in submission.problem.testcase_set.all():
+            result.append("Compile Error")
+
+    submission.status = get_status_from_result(result)
+    submission.save()
+
 while True:
     waiting_list = Waiting.objects.all()
 
     if waiting_list:
         for waiting in waiting_list:
             exec_file = judge(waiting)
-            run_testcases(waiting, exec_file)
+            if exec_file != "Compile Error":
+                run_testcases(waiting, exec_file)
+            else:
+                solve_CE()
             waiting.delete()
     else:
         time.sleep(1)
