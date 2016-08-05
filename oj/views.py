@@ -79,8 +79,12 @@ def register(request):
             error_message = "Passwords mismatched."
         elif len(request.POST["username"]) == 0:
             error_message = "Empty username."
+        elif len(request.POST["username"]) > 15:
+            error_message = "Username too long."
         elif len(request.POST["password"]) == 0:
             error_message = "Empty password."
+        elif len(request.POST["password"]) > 20:
+            error_message = "Password too long."
         elif len(User.objects.filter(username=request.POST['username'])):
             error_message = "This username has been registered."
         else:
