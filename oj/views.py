@@ -4,17 +4,27 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Problem, Submission, Waiting, User
 
 def index(request):
-    return render(request, 'index.html')
+    if('username' in request.session.keys()):
+        context = {'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'len': 0, 'name': ''}
+    return render(request, 'index.html',context)
    # return HttpResponse("欢迎来到魔法炮OJ！")
 
 def problemset(request):
     problem_list = Problem.objects.all()
-    context = {'problem_list': problem_list}
+    if('username' in request.session.keys()):
+        context = {'problem_list': problem_list,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'problem_list': problem_list,'len': 0, 'name': ''}
     return render(request, 'problemset.html', context)
 
 def problem(request, problem_id):
     problem = Problem.objects.get(pk=problem_id)
-    context = {'problem': problem}
+    if('username' in request.session.keys()):
+        context = {'problem': problem,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'problem': problem,'len': 0, 'name': ''}
     return render(request, 'problem.html', context)
 
 def submit(request, **kwargs):
@@ -31,7 +41,10 @@ def submit(request, **kwargs):
         problem = Problem.objects.get(pk=kwargs['problem_id'])
     else:
         problem = None
-    context = {'problem': problem}
+    if('username' in request.session.keys()):
+        context = {'problem': problem,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'problem': problem,'len': 0, 'name': ''}
     return render(request, 'submit.html', context)
 
 def login(request):
@@ -48,7 +61,10 @@ def login(request):
             else:
                 request.session['username'] = request.POST['username']
                 return HttpResponseRedirect('/')
-    context = {'error_message': error_message}
+    if('username' in request.session.keys()):
+        context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'error_message': error_message,'len': 0, 'name': ''}
     return render(request, 'login.html', context)
 
 def register(request):
@@ -65,7 +81,10 @@ def register(request):
         else:
             user = User(username=request.POST['username'], password=request.POST['password'])
             user.save()
-    context = {'error_message': error_message}
+    if('username' in request.session.keys()):
+        context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'error_message': error_message,'len': 0, 'name': ''}
     return render(request, 'register.html', context)
 
 def logout(request):
@@ -73,4 +92,8 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 def ranklist(request):
-    return render(request, 'ranklist.html')
+    if('username' in request.session.keys()):
+        context = {'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        context = {'len': 0, 'name': ''}
+    return render(request, 'ranklist.html',context)
