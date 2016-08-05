@@ -20,8 +20,7 @@ def judge(waiting):
         os.system("g++ -o /tmp/test /tmp/test.cpp")
         return "/tmp/test"
 
-def solve_output(input):
-    f = open(input, 'r')
+def solve_output(f):
     read_in = f.readlines()
     res = []
     f.close()
@@ -34,21 +33,35 @@ def solve_output(input):
         res.pop()
     return res
 
-def checkAC(input1,input2):
+def check_output(input1, input2):
     if solve_output(input1) == solve_output(input2):
-        return "AC"
+        return "Accepted"
     else:
-        return "WA"
+        return "Wrong Answer"
+
+def get_status_from_result(result):
+    priority = {
+        'Wrong Answer': 2, 
+        'Accepted': 1, 
+    }
+
+    return max(result, key=lambda x: priority[x])
 
 def run_testcases(waiting, exec_file):
     submission = waiting.submission
     language = submission.language
+
+    result = []
     
     if language == "C++":
         for testcase in submission.problem.testcase_set.all():
             os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out")
-            #TODO: compare test.out and stdout, return a judge status
-            return "Accepted"
+            fstd = open(testcase.output.file.name)
+            fout = open("/tmp/test.out")
+            result.append(check_output(fstd, fout))
+
+    submission.status = get_status_from_result(result)
+    submission.save()
 
 while True:
     waiting_list = Waiting.objects.all()

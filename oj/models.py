@@ -27,9 +27,11 @@ class User(models.Model):
 
 class Submission(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     source = models.TextField()
     language = models.CharField(max_length=15)
+    status = models.CharField(max_length=20)
+    # result = models.JSONField()
 
     def __str__(self):
         return self.source

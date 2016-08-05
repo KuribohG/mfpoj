@@ -29,14 +29,18 @@ def problem(request, problem_id):
 
 def submit(request, **kwargs):
     if request.method == 'POST':
-        submission = Submission(
-                         problem=Problem.objects.get(pk=request.POST['problem_id']),
-                         source=request.POST['source'],
-                         language=request.POST['language'],
-                     )
-        submission.save()
-        waiting=Waiting(submission=submission)
-        waiting.save()
+        if 'username' in request.session.keys():
+            submission = Submission(
+                             problem=Problem.objects.get(pk=request.POST['problem_id']),
+                             source=request.POST['source'],
+                             language=request.POST['language'],
+                             user=User.objects.filter(username=request.session['username'])[0], 
+                         )
+            submission.save()
+            waiting=Waiting(submission=submission)
+            waiting.save()
+        else:
+            return HttpResponse("You should login first.")
     if 'problem_id' in kwargs.keys():
         problem = Problem.objects.get(pk=kwargs['problem_id'])
     else:
