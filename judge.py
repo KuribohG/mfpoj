@@ -20,6 +20,26 @@ def judge(waiting):
         os.system("g++ -o /tmp/test /tmp/test.cpp")
         return "/tmp/test"
 
+def solve_output(input):
+    f = open(input, 'r')
+    read_in = f.readlines()
+    res = []
+    f.close()
+    for read_string in read_in:
+        if read_string.endswith('\n'):
+            read_string = read_string[:-1]
+        read_string = read_string.rstrip()
+        res.append(read_string)
+    while res[-1] == '':
+        res.pop()
+    return res
+
+def checkAC(input1,input2):
+    if solve_output(input1) == solve_output(input2):
+        return "AC"
+    else:
+        return "WA"
+
 def run_testcases(waiting, exec_file):
     submission = waiting.submission
     language = submission.language
