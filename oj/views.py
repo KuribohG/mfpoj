@@ -117,3 +117,12 @@ def status(request):
     else:
         context = {'submission_list': submission_list,'len': 0, 'name': ''}
     return render(request, 'status.html',context)
+
+def modify(request):
+    user_list = User.objects.all()
+    if('username' in request.session.keys()):
+        context = {'user_list':user_list,'len': len(request.session['username']), 'name': request.session['username']}
+    else:
+        return HttpResponse("You should login first.")
+    return render(request, 'modify.html',context)
+
