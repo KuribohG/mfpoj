@@ -88,7 +88,7 @@ def register(request):
         elif len(User.objects.filter(username=request.POST['username'])):
             error_message = "This username has been registered."
         else:
-            user = User(username=request.POST['username'], password=request.POST['password'])
+            user = User(username=request.POST['username'], password=request.POST['password'],nickname=request.POST['username'])
             user.save()
     if('username' in request.session.keys()):
         context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
