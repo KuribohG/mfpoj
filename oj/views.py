@@ -90,6 +90,7 @@ def register(request):
         else:
             user = User(username=request.POST['username'], password=request.POST['password'],nickname=request.POST['username'])
             user.save()
+            return HttpResponseRedirect('/login')
     if('username' in request.session.keys()):
         context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
     else:
@@ -136,12 +137,14 @@ def modify(request):
                 s.school=request.POST['school']
                 s.email=request.POST['email']
                 s.save()
+                return HttpResponseRedirect('/')
             else:
                 s.nickname=request.POST['nickname']
                 s.password=request.POST['password']
                 s.school=request.POST['school']
                 s.email=request.POST['email']
                 s.save()
+                return HttpResponseRedirect('/')
     if('username' in request.session.keys()):
         context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
     else:
