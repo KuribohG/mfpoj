@@ -9,6 +9,17 @@ Clone the repo to your computer:
 git clone git@github.com:KuribohG/mfpoj.git
 ```
 
+Clone the submodule:
+```
+git submodule update --init --recursive
+```
+
+Install `lorunner`:
+```
+sudo python3 lorunner/setup.py build
+sudo python3 lorunner/setup.py install
+```
+
 Then run command line:
 ```
 python3 manage.py makemigrations oj
