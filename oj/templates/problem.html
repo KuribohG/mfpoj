@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿{% load djangomarkdown %}
+<style type="text/css">
 <!--
 -->
 </style>
@@ -10,7 +11,7 @@
 		<div class="col-md-12 column">
 			<div class="jumbotron">
 				<h1 align="center"><span class="STYLE1">{{ problem.title }} </span></h1>
-				<p><span class="STYLE2">{{ problem.description }} </span></p>
+				<p><span class="STYLE2">{{ problem.description|djangomarkdown }} </span></p>
 				<p align="center">
 					 <a class="btn btn-primary btn-large" href="{% url 'submit' problem.id %}">Submit</a>				</p>
 		  </div>
