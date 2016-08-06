@@ -14,6 +14,11 @@ Clone the submodule:
 git submodule update --init --recursive
 ```
 
+Satisfy prerequisities:
+```
+sudo pip3 install requirements.txt
+```
+
 Install `lorunner`:
 ```
 sudo python3 lorunner/setup.py build
