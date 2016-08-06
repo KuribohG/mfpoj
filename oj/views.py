@@ -133,9 +133,14 @@ def modify(request):
                 error_message = "Password too long."
             elif len(request.POST["password"]) == 0:
                 s.nickname=request.POST['nickname']
+                s.school=request.POST['school']
+                s.email=request.POST['email']
                 s.save()
             else:
                 s.nickname=request.POST['nickname']
+                s.password=request.POST['password']
+                s.school=request.POST['school']
+                s.email=request.POST['email']
                 s.save()
     if('username' in request.session.keys()):
         context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
