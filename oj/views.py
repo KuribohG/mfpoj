@@ -119,9 +119,26 @@ def status(request):
     return render(request, 'status.html',context)
 
 def modify(request):
-    user_list = User.objects.all()
+    error_message = ""
+    if request.method == 'POST':
+        if len(request.POST['opassword']) == 0:
+            error_message = "Please input old password."
+        else:
+            s = User.objects.filter(username=request.session['username'])
+            if  request.POST['opassword'] != s[0].password:
+                error_message = "Incorrect old password."
+            elif request.POST['password'] != request.POST['password2']:
+                error_message = "Passwords mismatched."
+            elif len(request.POST["password"]) > 20:
+                error_message = "Password too long."
+            elif len(request.POST["password"]) == 0:
+                s[0].nickname=request.POST['nickname']
+                s[0].save()
+            else:
+                s[0].nickname=request.POST['nickname']
+                s[0].save()
     if('username' in request.session.keys()):
-        context = {'user_list':user_list,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
     else:
         return HttpResponse("You should login first.")
     return render(request, 'modify.html',context)
