@@ -21,17 +21,17 @@
 <form method="post" action="{% url 'register' %}">
 {% csrf_token %}
 <center><table>
-<tr><td width="45%">Username:
-  </td><td width="55%"><input type="text" name="username" />
+<tr><td width="45%" class="STYLE1">Username:
+  </td><td width="55%" class="STYLE1"><input type="text" name="username" />
 </td></tr>
-<tr><td>Password:
-  </td><td><input type="password" name="password" />
+<tr><td class="STYLE1">Password:
+  </td><td><input type="password" name="password" class="STYLE1"/>
 </td></tr>
-<tr><td>Password Again:
-  </td><td><input type="password" name="password2" />
+<tr><td class="STYLE1">Password Again:
+  </td><td><input type="password" name="password2" class="STYLE1"/>
 </td></tr>
 <tr><td>
-  </td><td><input type="submit" value="Register" />
+  </td><td><input type="submit" value="Register" class="STYLE1"/>
 </td></tr>
 </table></center>
 </form>
