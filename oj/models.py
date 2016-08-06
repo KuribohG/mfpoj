@@ -14,6 +14,8 @@ class Testcase(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
     input = models.FileField(upload_to=upload_path)
     output = models.FileField(upload_to=upload_path)
+    time_limit = models.IntegerField()
+    memory_limit = models.IntegerField()
 
     def __str__(self):
         return self.problem.title
