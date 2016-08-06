@@ -1,0 +1,3 @@
+[submodule "lorunner"]
+	path = lorunner
+	url = git@github.com:KuribohG/Lo-runner.git

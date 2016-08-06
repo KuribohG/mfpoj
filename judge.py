@@ -6,7 +6,21 @@ import django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mfpoj.settings'
 django.setup()
 
+import lorun
+
 from oj.models import Waiting
+
+RESULT_STR = [
+    'Accepted',
+    'Presentation Error',
+    'Time Limit Exceeded',
+    'Memory Limit Exceeded',
+    'Wrong Answer',
+    'Runtime Error',
+    'Output Limit Exceeded',
+    'Compile Error',
+    'System Error', 
+]
 
 def judge(waiting):
     submission = waiting.submission
@@ -22,6 +36,7 @@ def judge(waiting):
             return "/tmp/test"
         else:
             return "Compile Error"
+
 def solve_output(f):
     read_in = f.readlines()
     res = []
@@ -42,26 +57,53 @@ def check_output(input1, input2):
         return "Wrong Answer"
 
 def get_status_from_result(result):
-    priority = {
-        'Wrong Answer': 2, 
-        'Accepted': 1, 
-        'Compile Error': 3,
+    priority = {}
+    for idx, status in enumerate(RESULT_STR):
+        priority[status] = idx
+
+    return max([obj['result'] for obj in result])
+
+def run_one_testcase(testcase, command):
+    fd_in = open(testcase.input.file.name, 'r')
+    fd_out = open("/tmp/test.out", 'w')
+
+    runcfg = {
+        'args': [command], 
+        'fd_in': fd_in.fileno(), 
+        'fd_out': fd_out.fileno(), 
+        'timelimit': 1000, # testcase.time_limit in MS
+        'memorylimit': 128 * 1024, # testcase.memory_limit in KB
     }
 
-    return max(result, key=lambda x: priority[x])
+    rst = lorun.run(runcfg)
+
+    fd_in.close()
+    fd_out.close()
+
+    rst['result'] = RESULT_STR[rst['result']]
+    if rst['result'] == 'Accepted':
+        fd_in = open(testcase.output.file.name, 'r')
+        fd_out = open("/tmp/test.out", 'r')
+        rst['result'] = check_output(fd_in, fd_out)
+        # check_rst = lorun.check(fd_in.fileno(), fd_out.fileno())
+        # rst['result'] = RESULT_STR[check_rst]
+
+    return rst
 
 def run_testcases(waiting, exec_file):
     submission = waiting.submission
     language = submission.language
 
     result = []
+    command = ""
     
     if language == "C++":
         for testcase in submission.problem.testcase_set.all():
-            os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out")
-            fstd = open(testcase.output.file.name)
-            fout = open("/tmp/test.out")
-            result.append(check_output(fstd, fout))
+            command = exec_file
+            # os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out")
+            # fstd = open(testcase.output.file.name)
+            # fout = open("/tmp/test.out")
+            result.append(run_one_testcase(testcase, command))
 
     submission.status = get_status_from_result(result)
     submission.save()
