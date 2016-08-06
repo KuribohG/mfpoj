@@ -18,20 +18,22 @@
 </head>
 
 {% include "header.html"%}
-<body>
 <form method="post" action="{% url 'register' %}">
 {% csrf_token %}
-<h1 align="center" class="STYLE1"> Username:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="text" name="username" />
-</h1>
-<p align="center" class="STYLE1"> Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="password" name="password" />
-</p>
-<p align="center" class="STYLE1">Password Again:
-  <input type="password" name="password2" />
-</p>
-<p align="center" class="STYLE1">&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Register" /></p>
+<center><table>
+<tr><td width="45%">Username:
+  </td><td width="55%"><input type="text" name="username" />
+</td></tr>
+<tr><td>Password:
+  </td><td><input type="password" name="password" />
+</td></tr>
+<tr><td>Password Again:
+  </td><td><input type="password" name="password2" />
+</td></tr>
+<tr><td>
+  </td><td><input type="submit" value="Register" />
+</td></tr>
+</table></center>
 </form>
 <p align="center" class="STYLE1">{{ error_message }}</p>
-</body>
 </html>
