@@ -16,7 +16,7 @@ git submodule update --init --recursive
 
 Satisfy prerequisities:
 ```
-sudo pip3 install requirements.txt
+sudo pip3 install $(cat requirements.txt)
 ```
 
 Install `lorunner`:
