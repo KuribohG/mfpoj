@@ -21,7 +21,7 @@ def problemset(request):
     problems_per_page = 2 #每页多少道题
     paginator = Paginator(problem_list, problems_per_page)
     try:
-        problem_list = paginator.page(request.GET['page']) #应该是paginator.page(page_num)，这个page_num应该怎么写啊，不写完没法换页啊
+        problem_list = paginator.page(request.GET['page']) 
     except PageNotAnInteger:
         problem_list = paginator.page(1)
     except EmptyPage:
