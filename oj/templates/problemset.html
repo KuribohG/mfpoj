@@ -2,6 +2,8 @@
 <!--
 -->
 </style>
+
+
 <link href="../static/css/style.css" rel="stylesheet" type="text/css" />
 {% include "header.html"%}
 <title>题目列表 - 魔法炮OJ</title><div class="container">
@@ -23,4 +25,22 @@
 			<p>{% endfor %} </p>
 	  </div>
 	</div>
+	
+	<!--分页大法开启-->
+ {% if problem_list.has_previous %}
+        <a class='paginator' title='上一页' href='?page={{ problem_list.previous_page_number }}'><span>&lt;&lt;</span></a>
+ {% endif %}
+ {% for page in problem_list.paginator.page_range %}
+     {% if page == problem_list.number %}
+         <a class='paginator_current' title='当前页:{{ page }}'><span>{{ page }}</span></a>
+     {% else %}
+         <a class='paginator' href='?page={{ page }}' title='{{ page }}'><span>{{ page }}</span></a>
+     {% endif %}
+     
+ {% endfor %}
+ {% if problem_list.has_next %}
+     <a class='paginator' title='下一页' href='?page={{ problem_list.next_page_number }}'><span>&gt;&gt;</span></a>
+ {% endif %}
+	<!--分页大法结束-->
+	
 </div>

@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Problem, Submission, Waiting, User
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
 
 def index(request):
     if('username' in request.session.keys()):
@@ -13,6 +16,18 @@ def index(request):
 
 def problemset(request):
     problem_list = Problem.objects.all()
+    
+    #分页大法开启
+    problems_per_page = 2 #每页多少道题
+    paginator = Paginator(problem_list, problems_per_page)
+    try:
+        problem_list = paginator.page(request.GET['page']) #应该是paginator.page(page_num)，这个page_num应该怎么写啊，不写完没法换页啊
+    except PageNotAnInteger:
+        problem_list = paginator.page(1)
+    except EmptyPage:
+        problem_list = paginator.page(paginator.num_pages)
+    #分页大法结束
+    
     if('username' in request.session.keys()):
         context = {'problem_list': problem_list,'len': len(request.session['username']), 'name': request.session['username']}
     else:
