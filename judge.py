@@ -116,7 +116,7 @@ def solve_CE():
     
     if language == "C++":
         for testcase in submission.problem.testcase_set.all():
-            result.append("Compile Error")
+            result.append(dict(result='Compile Error'))
 
     submission.status = get_status_from_result(result)
     submission.save()
