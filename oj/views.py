@@ -20,8 +20,12 @@ def problemset(request):
     #分页大法开启
     problems_per_page = 2 #每页多少道题
     paginator = Paginator(problem_list, problems_per_page)
+    if 'page' in request.GET.keys():
+        nowpage = request.GET['page']
+    else:
+        nowpage = 1
     try:
-        problem_list = paginator.page(request.GET['page']) 
+        problem_list = paginator.page(nowpage) 
     except PageNotAnInteger:
         problem_list = paginator.page(1)
     except EmptyPage:
