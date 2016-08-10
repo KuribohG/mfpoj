@@ -106,6 +106,8 @@ def run_testcases(waiting, exec_file):
             result.append(run_one_testcase(testcase, command))
 
     submission.status = get_status_from_result(result)
+    submission.time_used = max([obj['timeused'] for obj in result])
+    submission.memory_used = max([obj['memory_used'] for obj in result])
     submission.save()
 
 def solve_CE():

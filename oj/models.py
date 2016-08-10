@@ -35,6 +35,8 @@ class Submission(models.Model):
     source = models.TextField()
     language = models.CharField(max_length=15)
     status = models.CharField(max_length=20)
+    time_used = models.IntegerField()
+    memory_used = models.IntegerField()
     # result = models.JSONField()
 
     def __str__(self):
