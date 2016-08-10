@@ -40,6 +40,7 @@ def submit(request, **kwargs):
             submission.save()
             waiting=Waiting(submission=submission)
             waiting.save()
+            return HttpResponseRedirect('/status')
         else:
             return HttpResponse("You should login first.")
     if 'problem_id' in kwargs.keys():
