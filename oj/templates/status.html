@@ -4,6 +4,7 @@
 </style>
 <link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
 {% include "header.html"%}
+<div class="container">
 <title>提交状态 - 魔法炮OJ</title>
 
 <p>&nbsp;</p>
@@ -42,5 +43,24 @@
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
+  
 </table>
+	<!--分页大法开启-->
+ {% if submission_list.has_previous %}
+        <a class='paginator' title='上一页' href='?page={{ submission_list.previous_page_number }}'><span>&lt;&lt;</span></a>
+ {% endif %}
+ {% for page in submission_list.paginator.page_range %}
+     {% if page == submission_list.number %}
+         <a class='paginator_current' title='当前页:{{ page }}'><span>{{ page }}</span></a>
+     {% else %}
+         <a class='paginator' href='?page={{ page }}' title='{{ page }}'><span>{{ page }}</span></a>
+     {% endif %}
+     
+ {% endfor %}
+ {% if submission_list.has_next %}
+     <a class='paginator' title='下一页' href='?page={{ submission_list.next_page_number }}'><span>&gt;&gt;</span></a>
+ {% endif %}
+	<!--分页大法结束-->
+</div>
 <p>&nbsp;</p>
+

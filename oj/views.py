@@ -133,8 +133,25 @@ def ranklist(request):
 
 def status(request):
     submission_list = Submission.objects.all()
-    submission_list = list(submission_list)[-50:]
+    submission_list = list(submission_list)
     submission_list.reverse()
+    #from IPython import embed;embed()
+    
+    #分页大法开启
+    submissions_per_page = 2 
+    paginator = Paginator(submission_list, submissions_per_page)
+    if 'page' in request.GET.keys():
+        nowpage = request.GET['page']
+    else:
+        nowpage = 1
+    try:
+        submission_list = paginator.page(nowpage) 
+    except PageNotAnInteger:
+        submission_list = paginator.page(1)
+    except EmptyPage:
+        submission_list = paginator.page(paginator.num_pages)
+    #分页大法结束
+    
     if('username' in request.session.keys()):
         context = {'submission_list': submission_list,'len': len(request.session['username']), 'name': request.session['username']}
     else:
