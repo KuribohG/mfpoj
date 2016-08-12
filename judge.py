@@ -8,7 +8,7 @@ django.setup()
 
 import lorun
 
-from oj.models import Waiting
+from oj.models import Problem, Submission, Waiting, User
 
 RESULT_STR = [
     'Accepted',
@@ -106,6 +106,16 @@ def run_testcases(waiting, exec_file):
             result.append(run_one_testcase(testcase, command))
 
     submission.status = get_status_from_result(result)
+    
+    s = User.objects.filter(username = submission.user.username)[0]
+    s.res[submission.status] += 1
+    s.save()
+    
+    if submission.status == 'Accepted'
+    	p = Problem.objects.get(pk=request.POST['problem_id'])
+        p.ac += 1
+        p.save()
+    
     submission.time_used = max([obj['timeused'] for obj in result])
     submission.memory_used = max([obj['memoryused'] for obj in result])
     submission.save()
@@ -128,11 +138,18 @@ while True:
 
     if waiting_list:
         for waiting in waiting_list:
+        
+            s = User.objects.filter(username = waiting.submission.user.username)[0]
+            s.waiting -= 1
+            s.save()
+            
             exec_file = judge(waiting)
             if exec_file != "Compile Error":
                 run_testcases(waiting, exec_file)
             else:
                 solve_CE()
+                s.res["Compile Error"] += 1
+                s.save()
             waiting.delete()
     else:
         time.sleep(1)

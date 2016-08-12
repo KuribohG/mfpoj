@@ -61,6 +61,16 @@ def submit(request, **kwargs):
             submission.save()
             waiting=Waiting(submission=submission)
             waiting.save()
+            
+            s = User.objects.filter(username=request.session['username'])[0]
+            s.submit += 1
+            s.waiting += 1
+            s.save()
+            
+            p = Problem.objects.get(pk=request.POST['problem_id'])
+            p.submit += 1
+            p.save()
+            
             return HttpResponseRedirect('/status')
         else:
             return HttpResponse("You should login first.")
@@ -68,6 +78,7 @@ def submit(request, **kwargs):
         problem = Problem.objects.get(pk=kwargs['problem_id'])
     else:
         problem = None
+    
     if('username' in request.session.keys()):
         context = {'problem': problem,'len': len(request.session['username']), 'name': request.session['username']}
     else:
@@ -111,6 +122,8 @@ def register(request):
             error_message = "This username has been registered."
         else:
             user = User(username=request.POST['username'], password=request.POST['password'],nickname=request.POST['username'])
+            user.submit = 0
+            user.waiting = 0
             user.save()
             return HttpResponseRedirect('/login')
     if('username' in request.session.keys()):

@@ -3,6 +3,8 @@ from django.db import models
 class Problem(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
+    submit = models.IntegerField()
+    ac = models.IntegerField()
 
     def __str__(self):
         return self.title
@@ -26,6 +28,9 @@ class User(models.Model):
     nickname = models.CharField(max_length=30)
     school = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
+    submit = models.IntegerField()
+    waiting = models.IntegerField()
+    res = {"Accepted":0,"Presentation Error":0,"Time Limit Exceeded":0,"Memory Limit Exceeded":0,"Wrong Answer":0,"Runtime Error":0,"Output Limit Exceeded":0,"Compile Error":0,"System Error":0}
     def __str__(self):
         return self.username
 
