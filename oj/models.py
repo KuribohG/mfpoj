@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 class Problem(models.Model):
     title = models.CharField(max_length=50)
@@ -30,7 +31,21 @@ class User(models.Model):
     email = models.CharField(max_length=30)
     submit = models.IntegerField()
     waiting = models.IntegerField()
-    res = {"Accepted":0,"Presentation Error":0,"Time Limit Exceeded":0,"Memory Limit Exceeded":0,"Wrong Answer":0,"Runtime Error":0,"Output Limit Exceeded":0,"Compile Error":0,"System Error":0}
+
+    def stat_default():
+        return {"Accepted": 0, 
+                "Presentation Error": 0, 
+                "Time Limit Exceeded": 0, 
+                "Memory Limit Exceeded": 0, 
+                "Wrong Answer": 0, 
+                "Runtime Error": 0, 
+                "Output Limit Exceeded": 0, 
+                "Compile Error": 0, 
+                "System Error": 0, 
+               }
+
+    stat = models.TextField()
+
     def __str__(self):
         return self.username
 

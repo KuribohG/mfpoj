@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -106,6 +108,18 @@ def login(request):
     return render(request, 'login.html', context)
 
 def register(request):
+    def stat_default():
+        return {"Accepted": 0, 
+                "Presentation Error": 0, 
+                "Time Limit Exceeded": 0, 
+                "Memory Limit Exceeded": 0, 
+                "Wrong Answer": 0, 
+                "Runtime Error": 0, 
+                "Output Limit Exceeded": 0, 
+                "Compile Error": 0, 
+                "System Error": 0, 
+               }
+
     error_message = ""
     if request.method == 'POST':
         if request.POST['password'] != request.POST['password2']:
@@ -121,7 +135,10 @@ def register(request):
         elif len(User.objects.filter(username=request.POST['username'])):
             error_message = "This username has been registered."
         else:
-            user = User(username=request.POST['username'], password=request.POST['password'],nickname=request.POST['username'])
+            user = User(username=request.POST['username'], 
+                        password=request.POST['password'],
+                        nickname=request.POST['username'], 
+                        stat=json.dumps(stat_default()))
             user.submit = 0
             user.waiting = 0
             user.save()
@@ -148,7 +165,6 @@ def status(request):
     submission_list = Submission.objects.all()
     submission_list = list(submission_list)
     submission_list.reverse()
-    #from IPython import embed;embed()
     
     #分页大法开启
     submissions_per_page = 2 

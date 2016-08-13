@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import json
 
 import django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mfpoj.settings'
@@ -108,7 +109,9 @@ def run_testcases(waiting, exec_file):
     submission.status = get_status_from_result(result)
     
     s = User.objects.filter(username = submission.user.username)[0]
-    s.res[submission.status] += 1
+    obj = json.loads(s.stat)
+    obj[submission.status] += 1
+    s.stat = json.dumps(obj)
     s.save()
     
     if submission.status == 'Accepted':
@@ -139,16 +142,18 @@ while True:
     if waiting_list:
         for waiting in waiting_list:
         
-            s = User.objects.filter(username = waiting.submission.user.username)[0]
-            s.waiting -= 1
-            s.save()
+            #s = User.objects.filter(username=waiting.submission.user.username)[0]
+            #s.waiting -= 1
+            #s.save()
             
             exec_file = judge(waiting)
             if exec_file != "Compile Error":
                 run_testcases(waiting, exec_file)
             else:
                 solve_CE()
-                s.res["Compile Error"] += 1
+                obj = json.loads(s.stat)
+                obj["Compile Error"] += 1
+                s.stat = json.dumps(obj)
                 s.save()
             waiting.delete()
     else:
