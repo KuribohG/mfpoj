@@ -112,7 +112,7 @@ def run_testcases(waiting, exec_file):
     s.save()
     
     if submission.status == 'Accepted':
-        p = Problem.objects.get(pk=request.POST['problem_id'])
+        p = submission.problem
         p.ac += 1
         p.save()
     
