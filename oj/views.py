@@ -35,17 +35,17 @@ def problemset(request):
     #分页大法结束
     
     if('username' in request.session.keys()):
-        context = {'problem_list': problem_list,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'problem_list': problem_list,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'problem_list': problem_list,'len': 0, 'name': ''}
+        context = {'problem_list': problem_list,'logined': 0, 'name': ''}
     return render(request, 'problemset.html', context)
 
 def problem(request, problem_id):
     problem = Problem.objects.get(pk=problem_id)
     if('username' in request.session.keys()):
-        context = {'problem': problem,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'problem': problem,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'problem': problem,'len': 0, 'name': ''}
+        context = {'problem': problem,'logined': 0, 'name': ''}
     return render(request, 'problem.html', context)
 
 def submit(request, **kwargs):
@@ -102,9 +102,9 @@ def login(request):
                 request.session['username'] = request.POST['username']
                 return HttpResponseRedirect('/')
     if('username' in request.session.keys()):
-        context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'error_message': error_message,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'error_message': error_message,'len': 0, 'name': ''}
+        context = {'error_message': error_message,'logined': 0, 'name': ''}
     return render(request, 'login.html', context)
 
 def register(request):
