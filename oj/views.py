@@ -10,9 +10,9 @@ from django.core.paginator import EmptyPage
 
 def index(request):
     if('username' in request.session.keys()):
-        context = {'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'logined': 1, 'name': request.session['username']}
     else:
-        context = {'len': 0, 'name': ''}
+        context = {'logined': 0, 'name': ''}
     return render(request, 'index.html',context)
    # return HttpResponse("欢迎来到魔法炮OJ！")
 
@@ -82,9 +82,9 @@ def submit(request, **kwargs):
         problem = None
     
     if('username' in request.session.keys()):
-        context = {'problem': problem,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'problem': problem,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'problem': problem,'len': 0, 'name': ''}
+        context = {'problem': problem,'logined': 0, 'name': ''}
     return render(request, 'submit.html', context)
 
 def login(request):
@@ -144,9 +144,9 @@ def register(request):
             user.save()
             return HttpResponseRedirect('/login')
     if('username' in request.session.keys()):
-        context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'error_message': error_message,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'error_message': error_message,'len': 0, 'name': ''}
+        context = {'error_message': error_message,'logined': 0, 'name': ''}
     return render(request, 'register.html', context)
 
 def logout(request):
@@ -156,9 +156,9 @@ def logout(request):
 def ranklist(request):
     user_list = User.objects.all()
     if('username' in request.session.keys()):
-        context = {'user_list':user_list,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'user_list':user_list,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'user_list':user_list,'len': 0, 'name': ''}
+        context = {'user_list':user_list,'logined': 0, 'name': ''}
     return render(request, 'ranklist.html',context)
 
 def status(request):
@@ -182,9 +182,9 @@ def status(request):
     #分页大法结束
     
     if('username' in request.session.keys()):
-        context = {'submission_list': submission_list,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'submission_list': submission_list,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'submission_list': submission_list,'len': 0, 'name': ''}
+        context = {'submission_list': submission_list,'logined': 0, 'name': ''}
     return render(request, 'status.html',context)
 
 def modify(request):
@@ -214,7 +214,7 @@ def modify(request):
                 s.save()
                 return HttpResponseRedirect('/')
     if('username' in request.session.keys()):
-        context = {'error_message': error_message,'len': len(request.session['username']), 'name': request.session['username']}
+        context = {'error_message': error_message,'logined': 1, 'name': request.session['username']}
     else:
         return HttpResponse("You should login first.")
     return render(request, 'modify.html',context)
