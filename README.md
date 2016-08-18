@@ -14,7 +14,7 @@ Clone the submodule:
 git submodule update --init --recursive
 ```
 
-Satisfy prerequisities:
+Satisfy prerequisites:
 ```
 sudo pip3 install $(cat requirements.txt)
 ```
