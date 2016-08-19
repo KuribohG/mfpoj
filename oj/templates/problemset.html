@@ -20,7 +20,7 @@
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-4 column">
-			<h2>{% for problem in problem_list %} <a href="file:///D|/mfpoj-master/oj/templates/problem.html"></a></h2>
+			{% for problem in problem_list %} 
 			<h2><a href="{% url 'problem' problem.id %}"> {{ problem.title }} </a></h2>
 			<p>{% endfor %} </p>
 	  </div>

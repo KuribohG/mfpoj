@@ -23,7 +23,7 @@
   {% for submission in submission_list %}
   <tr>
     <td><div align="center">{{submission.id}}</div></td>
-    <td><div align="center">{{submission.user.username}}</div></td>
+    <td><div align="center"><a href="{% url 'user' submission.user.username %}">{{submission.user.username}}</a></div></td>
     <td><div align="center">{{submission.problem.id}}</div></td>
     <td><div align="center">{{submission.status}}</div></td>
     <td><div align="center">{{submission.memory_used}}</div></td>
