@@ -142,7 +142,7 @@ while True:
     if waiting_list:
         for waiting in waiting_list:
         
-            #s = User.objects.filter(username=waiting.submission.user.username)[0]
+            s = waiting.submission.user
             #s.waiting -= 1
             #s.save()
             
