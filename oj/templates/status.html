@@ -7,42 +7,62 @@
 <div class="container">
 <title>提交状态 - 魔法炮OJ</title>
 
-<p>&nbsp;</p>
- <table width="1023" height="232" border="0">
+<table class="table table-striped b-t text-sm m-b-none">
+        <thead>
+          <tr>
+            <th>RunID</th>
+            <th>Problem</th>
+            <th class="run-username">Username</th>
+            <th class="run-status">Result</th>
+            <th class="run-time">Time</th>
+            <th class="run-memory">Memory</th>
+            <th class="run-format">Language</th>
+            <th class="run-codelength">Length</th>
+            <th class="run-datetime">Submit_Time</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for submission in submission_list %}
   <tr>
-    <td width="75" height="40"><div align="center">RunID</div></td>
-    <td width="185"><div align="center">Username</div></td>
-    <td width="100"><div align="center">Problem</div></td>
-    <td width="200"><div align="center">Result</div></td>
-    <td width="120"><div align="center">Memory</div></td>
-    <td width="100"><div align="center">Time</div></td>
-    <td width="40"><div align="center">Language</div></td>
-    <td width="100"><div align="center">Length</div></td>
-    <td width="200"><div align="center">Submit_Time</div></td>
-  </tr>
-  {% for submission in submission_list %}
-  <tr>
-    <td><div align="center">{{submission.id}}</div></td>
-    <td><div align="center"><a href="{% url 'user' submission.user.username %}">{{submission.user.username}}</a></div></td>
-    <td><div align="center">{{submission.problem.id}}</div></td>
-    <td><div align="center">{{submission.status}}</div></td>
-    <td><div align="center">{{submission.memory_used}}</div></td>
-    <td><div align="center">{{submission.time_used}}</div></td>
-    <td><div align="center">{{submission.language}}</div></td>
-    <td><div align="center">&nbsp;</div></td>
-    <td><div align="center">&nbsp;</div></td>
+    <td>{{submission.id}}</td>
+    <td>{{submission.problem.id}}</td>
+    <td><a style=" text-decoration: none; color: #444;"href="{% url 'user' submission.user.username %}">{{submission.user.username}}</a></td>
+    
+ {% if submission.status == "Accepted" %}
+    <td><font color=#009100>{{submission.status}}</font></td>
+ {% elif submission.status == "Compile Error" %}
+    <td><font color=#0000E3>{{submission.status}}</font></td>
+ {% elif submission.status == "Pending" %}
+    <td><font color=#EAC100>{{submission.status}}</font></td>
+ {% else %}
+    <td><font color=#FF0000>{{submission.status}}</font></td>
+ {% endif %}
+ 
+    <td>{{submission.time_used}}</td>
+    <td>{{submission.memory_used}}</td>
+    <td>{{submission.language}}</td>
+    <td>unknown</div></td>
+    <td>unknown</div></td>
   </tr>{% endfor %} 
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+  
+            <td>
+            </td>
+            <td>            
+            </td>
+            <td>
+            </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
   
 </table>
 	<!--分页大法开启-->

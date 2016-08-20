@@ -20,7 +20,7 @@ def problemset(request):
     problem_list = Problem.objects.all()
     
     #分页大法开启
-    problems_per_page = 2 #每页多少道题
+    problems_per_page = 50 #每页多少道题
     paginator = Paginator(problem_list, problems_per_page)
     if 'page' in request.GET.keys():
         nowpage = request.GET['page']
@@ -163,6 +163,20 @@ def logout(request):
 
 def ranklist(request):
     user_list = User.objects.all()
+    #分页大法开启
+    users_per_page = 50
+    paginator = Paginator(user_list, users_per_page)
+    if 'page' in request.GET.keys():
+        nowpage = request.GET['page']
+    else:
+        nowpage = 1
+    try:
+        user_list = paginator.page(nowpage) 
+    except PageNotAnInteger:
+        user_list = paginator.page(1)
+    except EmptyPage:
+        user_list = paginator.page(paginator.num_pages)
+    #分页大法结束
     if('username' in request.session.keys()):
         context = {'user_list':user_list,'logined': 1, 'name': request.session['username']}
     else:
@@ -175,7 +189,7 @@ def status(request):
     submission_list.reverse()
     
     #分页大法开启
-    submissions_per_page = 2 
+    submissions_per_page = 10 
     paginator = Paginator(submission_list, submissions_per_page)
     if 'page' in request.GET.keys():
         nowpage = request.GET['page']
