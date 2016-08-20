@@ -7,25 +7,71 @@
 <link href="../static/css/style.css" rel="stylesheet" type="text/css" />
 {% include "header.html"%}
 <title>题目列表 - 魔法炮OJ</title><div class="container">
-	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="jumbotron">
-				<h1>
-					<font face="楷体">魔法炮OJ				</font></h1>
-				<p><font face="黑体">大家好，我是我是魔法炮</font></p>
-				<p>
-					 <a class="btn btn-primary btn-large" href="#">Learn more</a>				</p>
-			</div>
-		</div>
-	</div>
-	<div class="row clearfix">
+	
+
+<!--	<div class="row clearfix">
 		<div class="col-md-4 column">
 			{% for problem in problem_list %} 
 			<h2><a href="{% url 'problem' problem.id %}"> {{ problem.title }} </a></h2>
 			<p>{% endfor %} </p>
 	  </div>
-	</div>
+	</div> -->
 	
+<table class="table table-striped m-b-none">
+      <thead>
+        <tr>
+            <th class="problem-status">
+              <i class="fa fa-puzzle-piece"></i>
+            </th>
+            <th class="problem-id"><span>ID</span></th>
+            <th><span>Title</span></th>
+            
+            <th class="problem-accept">
+              
+              <span>Accepted
+              
+            </span></th>
+            <th class="problem-submit"> <span>Submit</span></th>
+        </tr>
+      </thead>
+      <tbody>
+         
+   {% for problem in problem_list %}   
+        <tr>
+            <td>
+                
+                               
+            </td>
+           <td>
+                    {{problem.id}}
+            </td>
+            <td>
+                
+                <a class="pull-left" href="{% url 'problem' problem.id %}" title="">
+                    {{problem.title}}</a>
+            </td>
+           
+            <td>
+                    {{problem.ac}}          
+            </td>
+            <td>
+                    {{problem.submit}}          
+            </td>
+        </tr>
+      {% endfor %} 
+        
+        <tr>
+            <td>
+            </td>
+            <td>            
+            </td>
+            <td>
+            </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
+</table>
 	<!--分页大法开启-->
  {% if problem_list.has_previous %}
         <a class='paginator' title='上一页' href='?page={{ problem_list.previous_page_number }}'><span>&lt;&lt;</span></a>
