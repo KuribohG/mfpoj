@@ -29,5 +29,5 @@ def contests(request):
 
     return render(request, 'contests.html', context)
 
-def contest(request):
+def contest(request, contest_id):
     return HttpResponse("OK")
