@@ -4,9 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Problem, Submission, Waiting, User
-from django.core.paginator import Paginator
-from django.core.paginator import PageNotAnInteger
-from django.core.paginator import EmptyPage
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def index(request):
     if('username' in request.session.keys()):
@@ -189,7 +187,7 @@ def status(request):
     submission_list.reverse()
     
     #分页大法开启
-    submissions_per_page = 10 
+    submissions_per_page = 10
     paginator = Paginator(submission_list, submissions_per_page)
     if 'page' in request.GET.keys():
         nowpage = request.GET['page']

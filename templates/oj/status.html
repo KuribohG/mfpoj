@@ -25,7 +25,7 @@
         {% for submission in submission_list %}
   <tr>
     <td>{{submission.id}}</td>
-    <td><a style=" text-decoration: none;" href="{% url 'user' submission.user.username %}" title=""><style type="text/css">
+    <td><a style=" text-decoration: none;" href="{% url 'problem' submission.problem.id %}" title=""><style type="text/css">
 		a:link {color: #BE77FF} /* 未访问的链接 */
 		a:visited {color: #BE77FF} /* 已访问的链接 */
 		a:hover {color: #9F35FF} /* 鼠标移动到链接上 */

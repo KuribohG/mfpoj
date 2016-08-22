@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'oj.templatetags.djangomarkdown', 
+    'contest.apps.ContestConfig', 
     'oj.apps.OjConfig', 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -56,7 +57,9 @@ ROOT_URLCONF = 'mfpoj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'templates', 'oj'), 
+                 os.path.join(BASE_DIR, 'templates', 'contest')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

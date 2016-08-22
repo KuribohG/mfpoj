@@ -122,7 +122,7 @@ def run_testcases(waiting, exec_file):
     submission.time_used = max([obj['timeused'] for obj in result])
     submission.memory_used = max([obj['memoryused'] for obj in result])
     submission.save()
-
+    
 def solve_CE():
     submission = waiting.submission
     language = submission.language
