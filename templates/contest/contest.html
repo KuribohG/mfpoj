@@ -4,64 +4,86 @@
 </style>
 
 
-<link href="../static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
 {% include "header.html"%}
-<title>比赛列表 - 魔法炮OJ</title>
+<title>比赛题目 - 魔法炮OJ</title>
 <div class="container">
-	
+{{contest.title}}	
 	
 <table class="table table-striped m-b-none">
       <thead>
         <tr>
-            <th></th>
-            <th class="contest-id"><span>ID</span></th>
-            <th>Title</th>
-        </tr>    
+            <th class="problem-status">
+              <i class="fa fa-puzzle-piece"></i>
+            </th>
+            <th class="problem-id"><span>ID</span></th>
+            <th><span>Title</span></th>
+            
+            <th class="problem-accept">
+              
+              <span>Accepted
+              
+            </span></th>
+            <th class="problem-submit"> <span>Submit</span></th>
+        </tr>
       </thead>
       <tbody>
          
-   {% for contest in contest_list %}   
+   {% for problem in problem_list %}   
         <tr>
             <td>
+                
+                               
             </td>
            <td>
-                    {{contest.id}}
+                    {{problem.id}}
             </td>
             <td>
                 
-                <a style=" text-decoration: none;" href="{% url 'contest' contest.id %}" title="">
+                <a style=" text-decoration: none;" href="{% url 'problem' problem.id %}" title="">
 		<style type="text/css">
 		a:link {color: #BE77FF} /* 未访问的链接 */
 		a:visited {color: #BE77FF} /* 已访问的链接 */
 		a:hover {color: #9F35FF} /* 鼠标移动到链接上 */
 		a:active {color: #9F35FF} /* 选定的链接 */
 		</style>
-                    {{contest.title}}</a>
+                    {{problem.title}}</a>
             </td>
            
+            <td>
+                    {{problem.ac}}          
+            </td>
+            <td>
+                    {{problem.submit}}          
+            </td>
         </tr>
       {% endfor %} 
         
+        <tr>
             <td>
             </td>
             <td>            
             </td>
             <td>
             </td>
+            <td>            
+            </td>
+            <td>            
+            </td>
 </table>
 	<!--分页大法开启-->
  {% if problem_list.has_previous %}
         <a class='paginator' title='上一页' href='?page={{ problem_list.previous_page_number }}'><span>&lt;&lt;</span></a>
  {% endif %}
- {% for page in contest_list.paginator.page_range %}
-     {% if page == contest_list.number %}
+ {% for page in problem_list.paginator.page_range %}
+     {% if page == problem_list.number %}
          <a class='paginator_current' title='当前页:{{ page }}'><span>{{ page }}</span></a>
      {% else %}
          <a class='paginator' href='?page={{ page }}' title='{{ page }}'><span>{{ page }}</span></a>
      {% endif %}
      
  {% endfor %}
- {% if contest_list.has_next %}
+ {% if problem_list.has_next %}
      <a class='paginator' title='下一页' href='?page={{ problem_list.next_page_number }}'><span>&gt;&gt;</span></a>
  {% endif %}
 	<!--分页大法结束-->

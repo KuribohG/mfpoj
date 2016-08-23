@@ -30,4 +30,9 @@ def contests(request):
     return render(request, 'contests.html', context)
 
 def contest(request, contest_id):
-    return HttpResponse("OK")
+    contest = Contest.objects.get(pk=contest_id)
+    if('username' in request.session.keys()):
+        context = {'contest': contest,'logined': 1, 'name': request.session['username']}
+    else:
+        context = {'contest': contest,'logined': 0, 'name': ''}
+    return render(request, 'contest.html', context)
