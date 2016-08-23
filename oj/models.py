@@ -28,8 +28,8 @@ class User(models.Model):
     nickname = models.CharField(max_length=30)
     school = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
-    submit = models.IntegerField()
-    ac = models.IntegerField()
+    submit = models.IntegerField(default=0)
+    ac = models.IntegerField(default=0)
     #waiting = models.IntegerField()
 
     def stat_default():
@@ -44,7 +44,7 @@ class User(models.Model):
                 "System Error": 0, 
                }
 
-    stat = models.TextField()
+    stat = models.TextField(default=stat_default())
 
     def __str__(self):
         return self.username
