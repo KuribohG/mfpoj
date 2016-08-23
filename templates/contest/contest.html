@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿{% load num2letter %}
+<style type="text/css">
 <!--
 -->
 </style>
@@ -8,7 +9,7 @@
 {% include "header.html"%}
 <title>比赛题目 - 魔法炮OJ</title>
 <div class="container">
-{{contest.title}}	
+<h1 align="center">{{contest.title}}	</h1>
 	
 <table class="table table-striped m-b-none">
       <thead>
@@ -36,7 +37,7 @@
                                
             </td>
            <td>
-                    {{problem.id}}
+                    {{problem.id|num2letter}}
             </td>
             <td>
                 
@@ -47,7 +48,7 @@
 		a:hover {color: #9F35FF} /* 鼠标移动到链接上 */
 		a:active {color: #9F35FF} /* 选定的链接 */
 		</style>
-                    {{problem.title}}</a>
+                    {{problem.problem.title}}</a>
             </td>
            
             <td>

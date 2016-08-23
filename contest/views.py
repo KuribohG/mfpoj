@@ -82,9 +82,15 @@ def contest_submit(request, **kwargs):
     return render(request, 'contest_submit.html', context)
 
 def contest(request, contest_id):
+    logined = 'username' in request.session.keys()
     contest = Contest.objects.get(pk=contest_id)
-    if('username' in request.session.keys()):
-        context = {'contest': contest,'logined': 1, 'name': request.session['username']}
-    else:
-        context = {'contest': contest,'logined': 0, 'name': ''}
+    problem_list = contest.contestproblem_set.all()
+    
+    context = {
+        'contest': contest, 
+        'problem_list': problem_list, 
+        'logined': int(logined), 
+        'name': request.session['username'] if logined else '', 
+    }
+
     return render(request, 'contest.html', context)
