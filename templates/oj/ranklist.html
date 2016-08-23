@@ -24,14 +24,17 @@
       </td><td align="center" width="10%"><b>AC</b>
       </td><td align="center" width="10%"><b>Submit</b>
       </td><td align="center" width="10%"><b>Ratio</b></td></tr>
-  {% for user in user_list %}
-    <tr><td align="center">1</td>
-      <td align="center"><a style=" text-decoration: none; color: #444;"href="{% url 'user' user.username %}">{{user.username}}</a></td>
-      <td align="center">{{user.nickname}}</td>
-      <td align="center">{{user.ac}}</td>
-      <td align="center">{{user.submit}}</td>
-      <td align="center">666.00%</td>
-    </tr>
+     {% for user in all_user_list %}
+         {% if user in user_list %}
+	      <tr>
+	      <td align="center">{{ forloop.counter }}</td>
+	      <td align="center"><a style=" text-decoration: none; color: #444;"href="{% url 'user' user.username %}">{{user.username}}</a></td>
+	      <td align="center">{{user.nickname}}</td>
+	      <td align="center">{{user.ac}}</td>
+	      <td align="center">{{user.submit}}</td>
+	      <td align="center">666.00%</td>
+	    </tr>
+	  {% endif %}
    {% endfor %} 
     <tr>
       <td>&nbsp;</td>
