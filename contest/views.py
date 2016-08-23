@@ -31,3 +31,6 @@ def contests(request):
 
 def contest(request, contest_id):
     return HttpResponse("OK")
+
+def submit(request, contest_id, problem_id):
+    pass
