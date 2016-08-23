@@ -25,3 +25,4 @@ class ContestProblem(models.Model):
 class ContestSubmission(Submission):
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     contest_problem = models.ForeignKey(ContestProblem, on_delete=models.CASCADE)
+    contest_user = models.ForeignKey(ContestUser, on_delete=models.CASCADE)
