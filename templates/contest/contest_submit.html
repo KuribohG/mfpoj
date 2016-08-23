@@ -1,0 +1,24 @@
+﻿<style type="text/css">
+<!--
+-->
+</style>
+<link href="../../../../static/css/style.css" rel="stylesheet" type="text/css" />
+<title>提交 - {{problem.id}}</title>
+<p>{% include "header.html"%}
+  <form method="post" action="{% url 'contest_submit' contest_id%}">
+{% csrf_token %}</p>
+<p align="center">Problem ID:
+  <input type="text" name="problem_id" value="{{ problem_id }}">
+  <br />
+  Language:
+  <select name="language">
+    <option value="C++">C++</option>
+    <option value="Pascal">Pascal</option>
+    <option value="Java">Java</option>
+    <option value="Python">Python</option>
+  </select>
+  <br />
+  <textarea rows=30 name="source" cols="70"></textarea>
+  <br />
+  <input type="submit" value="Submit">
+</p>
