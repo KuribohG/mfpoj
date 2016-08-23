@@ -160,7 +160,8 @@ def logout(request):
     return HttpResponseRedirect('/')
 
 def ranklist(request):
-    user_list = User.objects.all()
+    all_user_list = User.objects.order_by("-ac","submit","username")
+    user_list = User.objects.order_by("-ac","submit","username")
     #分页大法开启
     users_per_page = 50
     paginator = Paginator(user_list, users_per_page)
@@ -176,9 +177,9 @@ def ranklist(request):
         user_list = paginator.page(paginator.num_pages)
     #分页大法结束
     if('username' in request.session.keys()):
-        context = {'user_list':user_list,'logined': 1, 'name': request.session['username']}
+        context = {'all_user_list':all_user_list,'user_list':user_list,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'user_list':user_list,'logined': 0, 'name': ''}
+        context = {'all_user_list':all_user_list,'user_list':user_list,'logined': 0, 'name': ''}
     return render(request, 'ranklist.html',context)
 
 def status(request):
