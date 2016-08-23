@@ -29,7 +29,7 @@ class User(models.Model):
     school = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
     submit = models.IntegerField()
-    waiting = models.IntegerField()
+    #waiting = models.IntegerField()
 
     def stat_default():
         return {"Accepted": 0, 
