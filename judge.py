@@ -118,6 +118,14 @@ def run_testcases(waiting, exec_file):
         p = submission.problem
         p.ac += 1
         p.save()
+        problem_id = p.id
+        if '%d'%problem_id in obj.keys():
+            pass
+        else:
+            s.ac += 1
+            obj['%d'%problem_id] = 1
+            s.stat = json.dumps(obj)
+            s.save()
     
     submission.time_used = max([obj['timeused'] for obj in result])
     submission.memory_used = max([obj['memoryused'] for obj in result])

@@ -146,7 +146,7 @@ def register(request):
                         nickname=request.POST['username'], 
                         stat=json.dumps(stat_default()))
             user.submit = 0
-            user.waiting = 0
+            user.ac = 0
             user.save()
             return HttpResponseRedirect('/login')
     if('username' in request.session.keys()):
