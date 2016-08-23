@@ -24,7 +24,7 @@ def contests(request):
     nowpage = request.GET['page'] if 'page' in request.GET.keys() else 1
     context = {
         'contest_list': paginate(contest_list, 10, nowpage), 
-        'logined': 1 if logined else 0, 
+        'logined': int(logined), 
         'name': request.session['username'] if logined else '', 
     }
 
