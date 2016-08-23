@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿{% load num2letter %}
+<style type="text/css">
 <!--
 -->
 </style>
@@ -36,7 +37,7 @@
                                
             </td>
            <td>
-                    {{problem.id}}
+                    {{problem.id|num2letter}}
             </td>
             <td>
                 
@@ -47,7 +48,7 @@
 		a:hover {color: #9F35FF} /* 鼠标移动到链接上 */
 		a:active {color: #9F35FF} /* 选定的链接 */
 		</style>
-                    {{problem.title}}</a>
+                    {{problem.problem.title}}</a>
             </td>
            
             <td>

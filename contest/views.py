@@ -24,7 +24,7 @@ def contests(request):
     nowpage = request.GET['page'] if 'page' in request.GET.keys() else 1
     context = {
         'contest_list': paginate(contest_list, 10, nowpage), 
-        'logined': 1 if logined else 0, 
+        'logined': int(logined), 
         'name': request.session['username'] if logined else '', 
     }
 
@@ -80,14 +80,17 @@ def contest_submit(request, **kwargs):
         'name': request.session['username'], 
     }
     return render(request, 'contest_submit.html', context)
+
 def contest(request, contest_id):
-    contest = Contest.objects.get(pk=contest_id)
-    problem_list = contest.contestproblem_set.objects.all()
     logined = 'username' in request.session.keys()
+    contest = Contest.objects.get(pk=contest_id)
+    problem_list = contest.contestproblem_set.all()
+    
     context = {
-        'contest': contest,
-        'problem_list': problem_list,
-        'logined': 1 if logined else 0, 
+        'contest': contest, 
+        'problem_list': problem_list, 
+        'logined': int(logined), 
         'name': request.session['username'] if logined else '', 
     }
+
     return render(request, 'contest.html', context)

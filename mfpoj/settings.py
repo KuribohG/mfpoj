@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'contest.templatetags.num2letter', 
     'oj.templatetags.djangomarkdown', 
     'contest.apps.ContestConfig', 
     'oj.apps.OjConfig', 
