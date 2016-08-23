@@ -22,7 +22,6 @@ class ContestProblem(models.Model):
     def __str__(self):
         return self.contest.title + self.problem.title
 
-class ContestSubmission(models.Model):
+class ContestSubmission(Submission):
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     contest_problem = models.ForeignKey(ContestProblem, on_delete=models.CASCADE)
-    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)

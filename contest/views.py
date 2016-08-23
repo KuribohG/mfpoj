@@ -30,6 +30,12 @@ def contests(request):
     return render(request, 'contests.html', context)
 
 def contest(request, contest_id):
+    return HttpResponse("OK")
+
+def submit(request, contest_id, problem_id):
+    pass
+
+def contest(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
     if('username' in request.session.keys()):
         context = {'contest': contest,'logined': 1, 'name': request.session['username']}
