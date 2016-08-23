@@ -30,10 +30,6 @@ def contests(request):
 
     return render(request, 'contests.html', context)
 
-def contest(request, contest_id):
-    return HttpResponse("OK")
-
-<<<<<<< HEAD
 def contest_submit(request, **kwargs):
     logined = 'username' in request.session.keys()
     has_problem = 'problem_id' in kwargs
@@ -84,9 +80,6 @@ def contest_submit(request, **kwargs):
         'name': request.session['username'], 
     }
     return render(request, 'contest_submit.html', context)
-=======
-def submit(request, contest_id, problem_id):
-    pass
 
 def contest(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
@@ -95,4 +88,3 @@ def contest(request, contest_id):
     else:
         context = {'contest': contest,'logined': 0, 'name': ''}
     return render(request, 'contest.html', context)
->>>>>>> b3d2e81f5df566974c9373f323152ac1ff0bc16a
