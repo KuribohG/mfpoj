@@ -29,16 +29,17 @@ def contests(request):
 
     return render(request, 'contests.html', context)
 
-def contest(request, contest_id):
-    return HttpResponse("OK")
-
 def submit(request, contest_id, problem_id):
     pass
 
 def contest(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
-    if('username' in request.session.keys()):
-        context = {'contest': contest,'logined': 1, 'name': request.session['username']}
-    else:
-        context = {'contest': contest,'logined': 0, 'name': ''}
+    problem_list = contest.contestproblem_set.objects.all()
+    logined = 'username' in request.session.keys()
+    context = {
+        'contest': contest,
+        'problem_list': problem_list,
+        'logined': 1 if logined else 0, 
+        'name': request.session['username'] if logined else '', 
+    }
     return render(request, 'contest.html', context)
