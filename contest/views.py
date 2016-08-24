@@ -32,22 +32,23 @@ def contests(request):
 
 def contest_submit(request, **kwargs):
     logined = 'username' in request.session.keys()
-    has_problem = 'problem_id' in kwargs
     if not logined:
         return HttpResponse("You should log in first.")
     
     contest_id = int(kwargs['contest_id'])
-    problem_id_letter = kwargs['problem_id'] if has_problem else 'A'
+    problem_id_letter = kwargs.get('problem_id')
+    if problem_id_letter is None:
+        problem_id_letter = 'A'
     problem_id = ord(problem_id_letter) - ord('A')
-    contest = Contest.objects.get(pk=contest_id)
-    contest_problem = contest.contestproblem_set.all()[problem_id]
 
     if request.method == 'POST':
-        if not request.POST['problem_id']:
+        if not "problem_id" in request.POST.keys():
             return HttpResponse("Please tell me the problem ID.")
         if logined:
-            user = User.objects.filter(username=request.session['username'])[0]
             contest = Contest.objects.get(pk=contest_id)
+            problem_id = ord(request.POST["problem_id"]) - ord('A')
+            contest_problem = contest.contestproblem_set.all()[problem_id]
+            user = User.objects.filter(username=request.session['username'])[0]
             registered = user.contestuser_set.filter(contest=contest).exists()
             if not registered:
                 contestuser = ContestUser(
@@ -75,7 +76,7 @@ def contest_submit(request, **kwargs):
 
     context = {
         'contest_id': contest_id, 
-        'problem_id': problem_id_letter, 
+        'problem_id_letter': problem_id_letter, 
         'logined': 1, 
         'name': request.session['username'], 
     }
