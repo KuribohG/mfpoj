@@ -3,9 +3,9 @@
 -->
 </style>
 <link href="../../../../static/css/style.css" rel="stylesheet" type="text/css" />
-<title>提交 - {{problem_id_letter}}</title>
+<title>提交 - {{contest_id}}{{problem_id_letter}}</title>
 <p>{% include "header.html"%}
-  <form method="post" action="{% url 'contest_submit' contest_id %}">
+  <form method="post" action="{% url 'contest_submit' contest_id=contest_id problem_id=problem_id_letter%}">
 {% csrf_token %}</p>
 <p align="center">Problem ID:
   <input type="text" name="problem_id" value="{{ problem_id_letter }}">

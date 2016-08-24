@@ -1,0 +1,22 @@
+﻿{% load djangomarkdown %}
+﻿{% load num2letter %}
+<style type="text/css">
+<!--
+-->
+</style>
+<link href="../../../../static/css/style.css" rel="stylesheet" type="text/css" />
+{% include "header.html"%}
+<title>题目描述 - {{contest_id}}{{problem_id_letter}}</title>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="jumbotron">
+				<h1 align="center"><span class="STYLE1">{{ problem.title }} </span></h1>
+				<p><span class="STYLE2">{{ problem.description|djangomarkdown }} </span></p>
+				<p align="center">
+					 <a class="btn btn-primary btn-large" href="{% url 'contest_submit' contest_id=contest_id problem_id=problem_id_letter %}">Submit</a>				</p>
+		  </div>
+		</div>
+	</div>
+	
+</div>
