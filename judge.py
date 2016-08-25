@@ -61,7 +61,8 @@ def get_status_from_result(result):
     priority = {}
     for idx, status in enumerate(RESULT_STR):
         priority[status] = idx
-
+    if len(result) == 0:
+        return "Accepted"
     return max([obj['result'] for obj in result])
 
 def run_one_testcase(testcase, command):
@@ -127,8 +128,14 @@ def run_testcases(waiting, exec_file):
             s.stat = json.dumps(obj)
             s.save()
     
-    submission.time_used = max([obj['timeused'] for obj in result])
-    submission.memory_used = max([obj['memoryused'] for obj in result])
+    if len(result) == 0:
+        submission.time_used = 0
+    else:
+        submission.time_used = max([obj['timeused'] for obj in result])
+    if len(result) == 0:
+        submission.memory_used = 0
+    else:
+        submission.memory_used = max([obj['memoryused'] for obj in result])
     submission.save()
     
 def solve_CE():
