@@ -83,7 +83,6 @@ def submit(request, **kwargs):
             
             s = User.objects.filter(username=request.session['username'])[0]
             s.submit += 1
-            #s.waiting += 1
             s.save()
             
             p = Problem.objects.get(pk=request.POST['problem_id'])

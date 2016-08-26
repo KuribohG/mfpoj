@@ -63,6 +63,8 @@ def contest_submit(request, **kwargs):
                              language=request.POST['language'], 
                              user=user, 
                              status='Pending', 
+                             length=len(request.POST['source']),
+                             submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
                              time_used=0, 
                              memory_used=0, 
                              contest=contest, 
