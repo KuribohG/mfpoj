@@ -53,6 +53,14 @@ def user(request, user_id):
     else:
         context = {'user': user,'logined': 0, 'name': ''}
     return render(request, 'user.html', context)
+    
+def code(request, submission_id):
+    submission = Submission.objects.get(pk=submission_id)
+    if('username' in request.session.keys()):
+        context = {'submission': submission,'logined': 1, 'name': request.session['username']}
+    else:
+        context = {'submission': submission,'logined': 0, 'name': ''}
+    return render(request, 'code.html', context)
 
 def submit(request, **kwargs):
     if request.method == 'POST':

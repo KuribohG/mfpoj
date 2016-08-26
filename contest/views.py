@@ -148,3 +148,11 @@ def contest_problem(request, **kwargs):
     }
     return render(request, 'contest_problem.html', context)
     
+def code(request, submission_id):
+    submission = Submission.objects.get(pk=submission_id)
+    if('username' in request.session.keys()):
+        context = {'submission': submission,'logined': 1, 'name': request.session['username']}
+    else:
+        context = {'submission': submission,'logined': 0, 'name': ''}
+    return render(request, 'code.html', context)
+

@@ -41,7 +41,12 @@
  
     <td>{{submission.time_used}}</td>
     <td>{{submission.memory_used}}</td>
-    <td>{{submission.language}}</td>
+    
+{% if name == submission.user.username %}
+    <td><a style=" text-decoration: none; color: #005AB5;" href="{% url 'code' submission.id %}" title="">{{submission.language}}</a></td>
+{% else %} <td>{{submission.language}}</td>
+{% endif %}
+
     <td>unknown</div></td>
     <td>unknown</div></td>
   </tr>{% endfor %} 

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'contest.templatetags.num2letter', 
     'oj.templatetags.djangomarkdown', 
+    'oj.templatetags.displaymarkdowncode', 
     'contest.apps.ContestConfig', 
     'oj.apps.OjConfig', 
     'django.contrib.admin',

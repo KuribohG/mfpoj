@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^user/(?P<user_id>[\s|\S]+)/$', views.user, name='user'), 
     url(r'^submit/(?P<problem_id>[0-9]+)/$', views.submit, name='submit'),
     url(r'^submit/$', views.submit, name='submit'),
+    url(r'^code/(?P<submission_id>[0-9]+)/$', views.code, name='code'),
     url(r'^$', views.index, name='index'),
     url(r'^login/$', views.login, name='login'), 
     url(r'^register/$', views.register, name='register'), 

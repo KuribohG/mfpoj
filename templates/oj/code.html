@@ -1,0 +1,50 @@
+﻿{% load djangomarkdown %}
+﻿{% load displaymarkdowncode %}
+﻿<style type="text/css">
+<!--
+-->
+</style>
+<link href="../../static/css/style.css" rel="stylesheet" type="text/css" />
+{% include "header.html"%}
+<style type="text/css">
+<!--
+.STYLE4 {font-size: 24px}
+-->
+</style>
+<title>查看源码 - {{submission.id}}</title>
+
+{% if name == submission.user.username %}
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="jumbotron">
+					<div class="content">
+					<b>
+					RunID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; {{submission.id}}<br>
+					User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.user.username}}<br>
+					Problem:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.problem.id}}<br>
+					Language:&nbsp;&nbsp;{{submission.language}}<br>
+					Result:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.status}}<br><br>
+					</b>
+						<pre>
+							{{submission.source|displaymarkdowncode|djangomarkdown}}
+						</pre> 
+					</div>
+			 	</div>
+			</div>
+		</div>
+	
+	</div>
+{% else %}
+<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="jumbotron">
+					<h1 align="center"><font size="5px" face="Comic Sans MS">Sorry, you are not allowed to view this code.</font>
+					</h1>
+			  </div>
+			</div>
+		</div>
+	
+	</div>
+{% endif %}
