@@ -57,7 +57,7 @@ class Submission(models.Model):
     status = models.CharField(max_length=20)
     time_used = models.IntegerField()
     memory_used = models.IntegerField()
-    # result = models.JSONField()
+    length = models.IntegerField()
 
     def __str__(self):
         return self.source

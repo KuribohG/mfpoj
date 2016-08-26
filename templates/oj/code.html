@@ -19,13 +19,14 @@
 			<div class="col-md-12 column">
 				<div class="jumbotron">
 					<div class="content">
-					<b>
-					RunID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; {{submission.id}}<br>
-					User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.user.username}}<br>
-					Problem:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.problem.id}}<br>
+					<b><font face="Mono">
+					RunID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.id}}<br>
+					User:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.user.username}}<br>
+					Problem:&nbsp;&nbsp;&nbsp;{{submission.problem.id}}<br>
 					Language:&nbsp;&nbsp;{{submission.language}}<br>
-					Result:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{submission.status}}<br><br>
-					</b>
+					Length:&nbsp;&nbsp;&nbsp;&nbsp;{{submission.length}}<br>
+					Result:&nbsp;&nbsp;&nbsp;&nbsp;{{submission.status}}<br><br>
+					</font></b>
 						<pre>
 							{{submission.source|displaymarkdowncode|djangomarkdown}}
 						</pre> 
