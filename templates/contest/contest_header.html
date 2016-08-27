@@ -1,19 +1,33 @@
-<div class="row clearfix">
-	<div class="col-md-5 column">
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li>
-						 <a href="">Contest</a>
-					</li>
-					<li>
-						 <a href="status/">Status</a>
-					</li>
-					<li>
-						 <a href="ranklist/">Ranklist</a>
+<center><b><font size=6 color=#BE77FF>{{contest.title}}</font></b></center>
+
+<div class="container">
+<div class="text-center">
+	<div class="uoj-click-zan-block" data-id="32" data-type="C" data-val="0" data-cnt="109"></div></div>
+<div class="row">
+		<div class="col-sm-12">
+			<ul class="nav nav-tabs" role="tablist">
 				
-				</ul>
-			</div>
-		</nav>
+{% if page_name == "contest" %}<li class="active">{% else %}<li>{% endif %}<a href="/contest/{{contest.id}}/" role="tab">{% if page_name == "contest" %}<font>{% else %}<font color=#777>{% endif %}
+			Contest</font></a></li>
+			
+{% if page_name == "status" %}<li class="active">{% else %}<li>{% endif %}<a href="/contest/{{contest.id}}/status/" role="tab">{% if page_name == "status" %}<font>{% else %}<font color=#777>{% endif %}
+			Status</font></a></li>
+			
+{% if page_name == "standings" %}<li class="active">{% else %}<li>{% endif %}<a href="/contest/{{contest.id}}/standings/" role="tab">{% if page_name == "standings" %}<font>{% else %}<font color=#777>{% endif %}
+			Standings</font></a></li>
+			
+{% if page_name == "announcement" %}<li class="active">{% else %}<li>{% endif %}<a href="/contest/{{contest.id}}/announcement/" role="tab">{% if page_name == "announcement" %}<font>{% else %}<font color=#777>{% endif %}
+			Announcement</font></a></li>
+			
+			</ul>
+<div class="top-buffer-md">
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover table-striped table-text-center">
+			<thead>
+			
+			</tbody>
+		</table>
 	</div>
 </div>
+</div>
+	

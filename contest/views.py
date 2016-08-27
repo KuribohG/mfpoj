@@ -1,3 +1,5 @@
+import time
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -76,11 +78,14 @@ def contest_submit(request, **kwargs):
             waiting.save()
         return HttpResponseRedirect('/contest/'+str(contest_id)+'/status')
 
+    contest = Contest.objects.get(pk=contest_id)
     context = {
+        'contest': contest, 
         'contest_id': contest_id, 
         'problem_id_letter': problem_id_letter, 
         'logined': 1, 
         'name': request.session['username'], 
+        'page_name': 'submit',
     }
     return render(request, 'contest_submit.html', context)
 
@@ -94,6 +99,7 @@ def contest(request, contest_id):
         'problem_list': problem_list, 
         'logined': int(logined), 
         'name': request.session['username'] if logined else '', 
+        'page_name': 'contest',
     }
 
     return render(request, 'contest.html', context)
@@ -122,10 +128,12 @@ def contest_status(request, contest_id):
     logined = 'username' in request.session.keys()
     
     context = {
+        'contest': contest, 
         'contest_id': contest_id, 
         'submission_list': submission_list, 
         'logined': int(logined),  
         'name': request.session['username'] if logined else '',
+        'page_name': 'status',
     }
     return render(request, 'contest_status.html',context)
 
@@ -142,11 +150,13 @@ def contest_problem(request, **kwargs):
     problem = Problem.objects.get(pk=real_id)
 
     context = {
+        'contest': contest, 
         'problem_id_letter':problem_id_letter,
         'contest_id': contest_id, 
         'problem': problem,
         'logined': int(logined),  
         'name': request.session['username'] if logined else '',
+        'page_name': 'problem',
     }
     return render(request, 'contest_problem.html', context)
     
