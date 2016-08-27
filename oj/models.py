@@ -59,6 +59,7 @@ class Submission(models.Model):
     memory_used = models.IntegerField()
     length = models.IntegerField()
     submit_time = models.TextField()
+    contest_problemid = models.CharField(max_length=1)
 
     def __str__(self):
         return self.source

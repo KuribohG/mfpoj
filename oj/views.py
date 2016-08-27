@@ -76,6 +76,7 @@ def submit(request, **kwargs):
                              status="Pending", 
                              time_used=0, 
                              memory_used=0,
+                             contest_problemid='0',
                          )
             submission.save()
             waiting=Waiting(submission=submission)
