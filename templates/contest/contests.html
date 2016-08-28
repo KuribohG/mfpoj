@@ -41,8 +41,8 @@
 		</style>
                     {{contest.title}}</a>
             </td>
-            <td> {{contest.start}} </td>
-            <td> {{contest.end}} </td>
+            <td> {{ contest.start|date:"Y-m-d H:i:s" }} </td>
+            <td> {{ contest.end|date:"Y-m-d H:i:s" }} </td>
             <td> </td>
            
         </tr>

@@ -41,15 +41,14 @@ def contest_submit(request, **kwargs):
     problem_id_letter = kwargs.get('problem_id')
     if problem_id_letter is None:
         problem_id_letter = 'A'
-    problem_id = ord(problem_id_letter) - ord('A')
 
     if request.method == 'POST':
         if not "problem_id" in request.POST.keys():
             return HttpResponse("Please tell me the problem ID.")
         if logined:
             contest = Contest.objects.get(pk=contest_id)
-            problem_id = ord(request.POST["problem_id"]) - ord('A')
-            contest_problem = contest.contestproblem_set.all()[problem_id]
+            problem_id = request.POST["problem_id"])
+            contest_problem = contest.contestproblem_set.filter(number=problem_id)
             user = User.objects.filter(username=request.session['username'])[0]
             registered = user.contestuser_set.filter(contest=contest).exists()
             if not registered:
