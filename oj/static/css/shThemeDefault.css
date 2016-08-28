@@ -35,7 +35,7 @@
 
 .syntaxhighlighter
 {
-	background-color: #fff !important;
+	background-color: #DCB5FF !important;
 }
 
 /* Highlighed line number */
@@ -72,13 +72,13 @@
 /* First line */
 .syntaxhighlighter .line.alt1
 {
-	background-color: #fff !important;
+	background-color: #F1E1FF !important;
 }
 
 /* Second line */
 .syntaxhighlighter .line.alt2
 {
-	background-color: #F8F8F8 !important;
+	background-color: #F1E1FF !important;
 }
 
 .syntaxhighlighter .toolbar
@@ -120,13 +120,13 @@
 
 .syntaxhighlighter .keyword
 { 
-	color: #069 !important; 
+	color: #CE0000 !important; 
 	font-weight: bold !important; 
 }
 
 .syntaxhighlighter .preprocessor 
 { 
-	color: gray !important; 
+	color: green !important; 
 }
 
 .syntaxhighlighter .variable 
@@ -157,7 +157,7 @@
 .syntaxhighlighter .color1,
 .syntaxhighlighter .color1 a
 { 
-	color: #808080 !important; 
+	color: #2828FF !important; 
 }
 
 .syntaxhighlighter .color2,
