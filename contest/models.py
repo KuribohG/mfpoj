@@ -4,6 +4,8 @@ from oj.models import Problem, Submission, User
 
 class Contest(models.Model):
     title = models.CharField(max_length=100)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
     
     def __str__(self):
         return self.title
