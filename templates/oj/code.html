@@ -11,6 +11,16 @@
 .STYLE4 {font-size: 24px}
 -->
 </style>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" src="../../static/js/shCore.js"></script>
+	<script type="text/javascript" src="../../static/js/shBrushCpp.js"></script>
+	<link type="text/css" rel="stylesheet" href="../../static/css/shCore.css"/>
+	<link type="text/css" rel="stylesheet" href="../../static/css/shThemeDjango.css"/>
+	<script type="text/javascript">
+		SyntaxHighlighter.all();
+	</script>
+</head>
 <title>查看源码 - {{submission.id}}</title>
 
 {% if name == submission.user.username %}
@@ -27,8 +37,8 @@
 					Length:&nbsp;&nbsp;&nbsp;&nbsp;{{submission.length}}<br>
 					Result:&nbsp;&nbsp;&nbsp;&nbsp;{{submission.status}}<br><br>
 					</font></b>
-						<pre>
-							{{submission.source|displaymarkdowncode|djangomarkdown}}
+						<pre class="brush: cpp;">
+{{submission.source}}
 						</pre> 
 					</div>
 			 	</div>
@@ -49,3 +59,4 @@
 	
 	</div>
 {% endif %}
+
