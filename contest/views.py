@@ -72,7 +72,6 @@ def contest_submit(request, **kwargs):
                              contest=contest, 
                              contest_problem=contest_problem,
                              contest_user=contestuser,  
-                             contest_problemid=problem_id_letter,
                          )
             submission.save()
             waiting=Waiting(submission=submission.submission_ptr)
