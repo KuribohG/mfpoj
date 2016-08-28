@@ -11,45 +11,54 @@
 <table class="table table-striped b-t text-sm m-b-none">
         <thead>
           <tr>
-            <th>RunID</th>
-            <th>Problem</th>
-            <th class="run-username">Username</th>
-            <th class="run-status">Result</th>
-            <th class="run-time">Time</th>
-            <th class="run-memory">Memory</th>
-            <th class="run-format">Language</th>
-            <th class="run-codelength">Length</th>
-            <th class="run-datetime">Submit_Time</th>
+            <th style="text-align:center;">RunID</th>
+            <th style="text-align:center;">Problem</th>
+            <th style="text-align:center;">Username</th>
+            <th style="text-align:center;">Result</th>
+            <th style="text-align:center;">Score</th>
+            <th style="text-align:center;">Time</th>
+            <th style="text-align:center;">Memory</th>
+            <th style="text-align:center;">Language</th>
+            <th style="text-align:center;">Length</th>
+            <th style="text-align:center;">Submit_Time</th>
           </tr>
         </thead>
         <tbody>
         {% for submission in submission_list %}
 	  <tr>
-	    <td>{{submission.id}}</td>
-	    <td><a style=" text-decoration: none; color: #444;" href="{% url 'contest_problem' contest_id=contest_id  problem_id=submission.contest_problem.number %}" titlea="">{{submission.contest_problem.number}}</a></td>
+	    <td align=center>{{submission.id}}</td>
+	    <td align=center><a style=" text-decoration: none; color: #444;" href="{% url 'contest_problem' contest_id=contest_id  problem_id=submission.contest_problem.number %}" titlea="">{{submission.contest_problem.number}}</a></td>
 	
-			<td><a style=" text-decoration: none; color: #444;" href="{% url 'user' submission.user.username %}" title="">{{submission.user.username}}</a></td>
+			<td align=center><a style=" text-decoration: none; color: #444;" href="{% url 'user' submission.user.username %}" title="">{{submission.user.username}}</a></td>
 	    
 	 {% if submission.status == "Accepted" %}
-	    <td><font color=#009100>{{submission.status}}</font></td>
+	    <td align=center><font color=#009100>{{submission.status}}</font></td>
 	 {% elif submission.status == "Compile Error" %}
-	    <td><font color=#0000E3>{{submission.status}}</font></td>
+	    <td align=center><font color=#0000E3>{{submission.status}}</font></td>
 	 {% elif submission.status == "Pending" %}
-	    <td><font color=#EAC100>{{submission.status}}</font></td>
+	    <td align=center><font color=#EAC100>{{submission.status}}</font></td>
 	 {% else %}
-	    <td><font color=#FF0000>{{submission.status}}</font></td>
+	    <td align=center><font color=#FF0000>{{submission.status}}</font></td>
 	 {% endif %}
 	 
-	    <td>{{submission.time_used}}</td>
-	    <td>{{submission.memory_used}}</td>
+ {% if submission.score == 100 %}
+    <td align=center><b><font color=#009100>{{submission.score}}</font></b></td>
+ {% elif submission.score == 0 %}
+    <td align=center><b><font color=#FF0000>{{submission.score}}</font></b></td>
+ {% else %}
+    <td align=center><b><font color=#EAC100>{{submission.score}}</font></b></td>
+ {% endif %}
+ 
+	    <td align=center>{{submission.time_used}}</td>
+	    <td align=center>{{submission.memory_used}}</td>
 	   
 {% if name == submission.user.username %}
-            <td><a style=" text-decoration: none; color: #005AB5;" href="{% url 'code' submission.id %}" title="">{{submission.language}}</a></td>
-{% else %} <td>{{submission.language}}</td>
+            <td align=center><a style=" text-decoration: none; color: #005AB5;" href="{% url 'code' submission.id %}" title="">{{submission.language}}</a></td>
+{% else %} <td align=center>{{submission.language}}</td>
 {% endif %}
 
-            <td>{{submission.length}} B</div></td>
-            <td>{{submission.submit_time}}</div></td>
+            <td align=center>{{submission.length}} B</div></td>
+            <td align=center>{{submission.submit_time}}</div></td>
 	  </tr>
   {% endfor %} 
   

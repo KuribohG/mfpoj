@@ -76,6 +76,7 @@ def submit(request, **kwargs):
                              length=len(request.POST['source']),
                              submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
                              status="Pending", 
+                             score=0,
                              time_used=0, 
                              memory_used=0,
                          )

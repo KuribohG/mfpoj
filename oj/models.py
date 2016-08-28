@@ -58,6 +58,7 @@ class Submission(models.Model):
     memory_used = models.IntegerField()
     length = models.IntegerField()
     submit_time = models.TextField()
+    score = models.IntegerField()
 
     def __str__(self):
         return self.source

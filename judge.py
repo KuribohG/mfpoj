@@ -100,14 +100,20 @@ def run_testcases(waiting, exec_file):
     command = ""
     
     if language == "C++":
+        testcases = len(submission.problem.testcase_set.all())
+        ac = 0
         for testcase in submission.problem.testcase_set.all():
             command = exec_file
             # os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out")
             # fstd = open(testcase.output.file.name)
             # fout = open("/tmp/test.out")
-            result.append(run_one_testcase(testcase, command))
+            rst = run_one_testcase(testcase, command)
+            if rst['result'] == 'Accepted':
+                ac += 1
+            result.append(rst)
 
     submission.status = get_status_from_result(result)
+    submission.score = 100*ac/testcases
     
     s = User.objects.filter(username = submission.user.username)[0]
     obj = json.loads(s.stat)
@@ -116,6 +122,7 @@ def run_testcases(waiting, exec_file):
     s.save()
     
     if submission.status == 'Accepted':
+        submission.score = 100
         p = submission.problem
         p.ac += 1
         p.save()
@@ -149,6 +156,7 @@ def solve_CE():
             result.append(dict(result='Compile Error'))
 
     submission.status = get_status_from_result(result)
+    submission.score = 0
     submission.save()
 
 while True:
