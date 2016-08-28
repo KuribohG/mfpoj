@@ -34,7 +34,9 @@ def problemset(request):
     #分页大法结束
     
     if('username' in request.session.keys()):
-        context = {'problem_list': problem_list,'logined': 1, 'name': request.session['username']}
+        s=User.objects.filter(username=request.session['username'])[0]
+        obj = json.loads(s.stat)
+        context = {'stat': obj,'problem_list': problem_list,'logined': 1, 'name': request.session['username']}
     else:
         context = {'problem_list': problem_list,'logined': 0, 'name': ''}
     return render(request, 'problemset.html', context)

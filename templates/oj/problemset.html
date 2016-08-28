@@ -1,3 +1,5 @@
+﻿{% load num2string %}
+
 ﻿<style type="text/css">
 <!--
 -->
@@ -28,8 +30,14 @@
         </tr>
       </thead>
       <tbody>
-         
-   {% for problem in problem_list %}   
+    {% for problem in problem_list %}
+   	{% if logined == 1 %}
+	   	{% for i,j in stat.items %}
+		   	{% if i == problem.id|num2string %}
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #CEFFCE;} </style>
+		   	{% endif %}
+	   	{% endfor %}
+       {% endif %}
         <tr>
             <td>
                 
@@ -57,7 +65,7 @@
                     {{problem.submit}}          
             </td>
         </tr>
-      {% endfor %} 
+    {% endfor %} 
         
         <tr>
             <td>
