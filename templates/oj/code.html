@@ -16,8 +16,11 @@
 	<script type="text/javascript" src="../../static/js/shCore.js"></script>
 	<script type="text/javascript" src="../../static/js/shBrushCpp.js"></script>
 	<link type="text/css" rel="stylesheet" href="../../static/css/shCore.css"/>
-	<link type="text/css" rel="stylesheet" href="../../static/css/shThemeDjango.css"/>
+	<link type="text/css" rel="stylesheet" href="../../static/css/shThemeDefault.css"/>
 	<script type="text/javascript">
+		SyntaxHighlighter.config.clipboardSwf = '../../static/swf/clipboard.swf';
+		SyntaxHighlighter.defaults['toolbar'] = true;
+		SyntaxHighlighter.defaults['gutter'] = false;
 		SyntaxHighlighter.all();
 	</script>
 </head>
@@ -37,9 +40,7 @@
 					Length:&nbsp;&nbsp;&nbsp;&nbsp;{{submission.length}}<br>
 					Result:&nbsp;&nbsp;&nbsp;&nbsp;{{submission.status}}<br><br>
 					</font></b>
-						<pre class="brush: cpp;">
-{{submission.source}}
-						</pre> 
+						<pre class="brush: cpp;">{{submission.source}}</pre> 
 					</div>
 			 	</div>
 			</div>
