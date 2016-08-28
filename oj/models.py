@@ -30,7 +30,6 @@ class User(models.Model):
     email = models.CharField(max_length=30)
     submit = models.IntegerField(default=0)
     ac = models.IntegerField(default=0)
-    #waiting = models.IntegerField()
 
     def stat_default():
         return {"Accepted": 0, 
@@ -59,7 +58,6 @@ class Submission(models.Model):
     memory_used = models.IntegerField()
     length = models.IntegerField()
     submit_time = models.TextField()
-    contest_problemid = models.CharField(max_length=1)
 
     def __str__(self):
         return self.source

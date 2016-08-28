@@ -18,6 +18,7 @@ class ContestUser(models.Model):
 class ContestProblem(models.Model):
     contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    number = models.CharField(max_length=10)
 
     def __str__(self):
         return self.contest.title + self.problem.title
