@@ -40,7 +40,7 @@
             </td>
             <td>
                 
-                <a style=" text-decoration: none;" href="{% url 'contest_problem' contest_id=contest.id problem_id=forloop.counter|num2letter %}" title="">
+                <a style=" text-decoration: none;" href="{% url 'contest_problem' contest_id=contest.id problem_id=problem.number %}" title="">
 		<style type="text/css">
 		a:link {color: #BE77FF} /* 未访问的链接 */
 		a:visited {color: #BE77FF} /* 已访问的链接 */

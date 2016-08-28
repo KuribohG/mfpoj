@@ -47,8 +47,8 @@ def contest_submit(request, **kwargs):
             return HttpResponse("Please tell me the problem ID.")
         if logined:
             contest = Contest.objects.get(pk=contest_id)
-            problem_id = request.POST["problem_id"])
-            contest_problem = contest.contestproblem_set.filter(number=problem_id)
+            problem_id = request.POST["problem_id"]
+            contest_problem = contest.contestproblem_set.filter(number=problem_id)[0]
             user = User.objects.filter(username=request.session['username'])[0]
             registered = user.contestuser_set.filter(contest=contest).exists()
             if not registered:
@@ -136,21 +136,16 @@ def contest_status(request, contest_id):
     }
     return render(request, 'contest_status.html',context)
 
-def contest_problem(request, **kwargs):
+def contest_problem(request, contest_id, problem_id):
     logined = 'username' in request.session.keys()
-    contest_id = int(kwargs['contest_id'])
-    problem_id_letter = kwargs.get('problem_id')
-    if problem_id_letter is None:
-        problem_id_letter = 'A'
-    problem_id = ord(problem_id_letter) - ord('A')
     contest = Contest.objects.get(pk=contest_id)
-    contest_problem = contest.contestproblem_set.all()[problem_id]
+    contest_problem = contest.contestproblem_set.filter(number=problem_id)[0]
     real_id = contest_problem.problem.id
     problem = Problem.objects.get(pk=real_id)
 
     context = {
         'contest': contest, 
-        'problem_id_letter':problem_id_letter,
+        'problem_id_letter':problem_id,
         'contest_id': contest_id, 
         'problem': problem,
         'logined': int(logined),  
