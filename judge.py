@@ -120,7 +120,7 @@ def run_testcases(waiting, exec_file):
         p.ac += 1
         p.save()
         problem_id = p.id
-        if '%d'%problem_id in obj.keys():
+        if '%d'%problem_id in obj.keys() and obj['%d'%problem_id] == 1:
             pass
         else:
             s.ac += 1

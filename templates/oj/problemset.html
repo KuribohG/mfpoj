@@ -33,8 +33,10 @@
     {% for problem in problem_list %}
    	{% if logined == 1 %}
 	   	{% for i,j in stat.items %}
-		   	{% if i == problem.id|num2string %}
+		   	{% if i == problem.id|num2string and j == 1 %}
 		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #CEFFCE;} </style>
+		   	{% elif i == problem.id|num2string and j == 0 %}
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #FFD2D2;} </style>
 		   	{% endif %}
 	   	{% endfor %}
        {% endif %}

@@ -91,6 +91,14 @@ def submit(request, **kwargs):
             p.submit += 1
             p.save()
             
+            obj = json.loads(s.stat)
+            if '%d'%p.id in obj.keys():
+                pass
+            else:
+                obj['%d'%p.id] = 0
+                s.stat = json.dumps(obj)
+                s.save()
+                
             return HttpResponseRedirect('/status')
         else:
             return HttpResponse("You should login first.")
