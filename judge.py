@@ -62,7 +62,7 @@ def get_status_from_result(result):
     for idx, status in enumerate(RESULT_STR):
         priority[status] = idx
     if len(result) == 0:
-        return "Accepted"
+        return "System Error"
     return max([obj['result'] for obj in result])
 
 def run_one_testcase(testcase, command):

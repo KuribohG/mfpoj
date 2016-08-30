@@ -35,6 +35,8 @@
 	    <td align=center><font color=#009100>{{submission.status}}</font></td>
 	 {% elif submission.status == "Compile Error" %}
 	    <td align=center><font color=#0000E3>{{submission.status}}</font></td>
+	 {% elif submission.status == "System Error" %}
+	    <td align=center><font color=#000000>{{submission.status}}</font></td>
 	 {% elif submission.status == "Pending" %}
 	    <td align=center><font color=#EAC100>{{submission.status}}</font></td>
 	 {% else %}
