@@ -113,7 +113,10 @@ def run_testcases(waiting, exec_file):
             result.append(rst)
 
     submission.status = get_status_from_result(result)
-    submission.score = int(round(100.0*ac/testcases))
+    if len(result) == 0:
+        submission.score = 0
+    else:
+        submission.score = int(round(100.0*ac/testcases))
     
     s = User.objects.filter(username = submission.user.username)[0]
     obj = json.loads(s.stat)
