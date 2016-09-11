@@ -1,4 +1,6 @@
 import time
+import json
+
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -73,6 +75,16 @@ def contest_submit(request, **kwargs):
                              contest_user=contestuser,  
                          )
             submission.save()
+
+            p = contest_problem.problem
+            obj = json.loads(user.stat)
+            if '%d'%p.id in obj.keys():
+                pass
+            else:
+                obj['%d'%p.id] = 0
+                user.stat = json.dumps(obj)
+                user.save()
+
             waiting=Waiting(submission=submission.submission_ptr)
             waiting.save()
         return HttpResponseRedirect('/contest/'+str(contest_id)+'/status')
