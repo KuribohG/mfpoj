@@ -134,6 +134,12 @@ def login(request):
         context = {'error_message': error_message,'logined': 0, 'name': ''}
     return render(request, 'login.html', context)
 
+def check_string_valid(String):
+    for single_char in String:
+        if single_char.isdigit() == 0 and single_char.isalpha() == 0 and single_char != '_' :
+            return 0
+    return 1
+
 def register(request):
     def stat_default():
         return {"Accepted": 0, 
@@ -159,6 +165,10 @@ def register(request):
             error_message = "Empty password."
         elif len(request.POST["password"]) > 20:
             error_message = "Password too long."
+        elif check_string_valid(request.POST["username"]) == 0:
+            error_message = "Invalid username."
+        elif check_string_valid(request.POST["password"]) == 0:
+            error_message = "Invalid password."
         elif len(User.objects.filter(username=request.POST['username'])):
             error_message = "This username has been registered."
         else:
