@@ -76,7 +76,13 @@ def contest_submit(request, **kwargs):
                          )
             submission.save()
 
+            user.submit += 1
+            user.save()
+            
+            
             p = contest_problem.problem
+            p.submit += 1
+            p.save()
             obj = json.loads(user.stat)
             if '%d'%p.id in obj.keys():
                 pass
