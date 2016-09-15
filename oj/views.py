@@ -252,17 +252,15 @@ def modify(request):
                 error_message = "Passwords mismatched."
             elif len(request.POST["password"]) > 20:
                 error_message = "Password too long."
-            elif len(request.POST["password"]) == 0:
-                s.nickname=request.POST['nickname']
-                s.school=request.POST['school']
-                s.email=request.POST['email']
-                s.save()
-                return HttpResponseRedirect('/')
             else:
-                s.nickname=request.POST['nickname']
-                s.password=request.POST['password']
-                s.school=request.POST['school']
-                s.email=request.POST['email']
+                if len(request.POST['nickname']) != 0:
+                    s.nickname=request.POST['nickname']
+                if len(request.POST['password']) != 0:
+                    s.password=request.POST['password']
+                if len(request.POST['school']) != 0:
+                    s.school=request.POST['school']
+                if len(request.POST['email']) != 0:
+                    s.email=request.POST['email']
                 s.save()
                 return HttpResponseRedirect('/')
     if('username' in request.session.keys()):
