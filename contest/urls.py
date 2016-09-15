@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^contest/(?P<contest_id>[0-9]+)/problem/(?P<problem_id>[A-Z]+)/$', views.contest_problem, name='contest_problem'), 
     url(r'^contest/(?P<contest_id>[0-9]+)/status/$', views.contest_status, name='contest_status'),
     url(r'^code/(?P<submission_id>[0-9]+)/$', views.code, name='code'),
+    url(r'^contest/(?P<contest_id>[0-9]+)/standings/$', views.contest_standings, name='contest_standings'),
 ]

@@ -153,6 +153,39 @@ def contest_status(request, contest_id):
         'page_name': 'status',
     }
     return render(request, 'contest_status.html',context)
+def contest_standings(request, contest_id):
+    contest = Contest.objects.get(pk=contest_id)
+    user_list = contest.contestuser_set.all()
+    user_list = list(user_list)
+    problem_list = contest.contestproblem_set.all()
+    
+    #分页大法开启
+    users_per_page = 50
+    paginator = Paginator(user_list, users_per_page)
+    if 'page' in request.GET.keys():
+        nowpage = request.GET['page']
+    else:
+        nowpage = 1
+    try:
+        submission_list = paginator.page(nowpage) 
+    except PageNotAnInteger:
+        submission_list = paginator.page(1)
+    except EmptyPage:
+        submission_list = paginator.page(paginator.num_pages)
+    #分页大法结束
+    
+    logined = 'username' in request.session.keys()
+    
+    context = {
+        'contest': contest, 
+        'contest_id': contest_id, 
+        'user_list': user_list, 
+        'problem_list': problem_list,
+        'logined': int(logined),  
+        'name': request.session['username'] if logined else '',
+        'page_name': 'standings',
+    }
+    return render(request, 'contest_standings.html',context)
 
 def contest_problem(request, contest_id, problem_id):
     logined = 'username' in request.session.keys()
