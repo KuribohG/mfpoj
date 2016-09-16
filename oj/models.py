@@ -59,6 +59,8 @@ class Submission(models.Model):
     length = models.IntegerField()
     submit_time = models.TextField()
     score = models.IntegerField(default=0)
+    from_contest = models.IntegerField(default=0)
+    from_contest_problem = models.CharField(max_length=10,default='0')
 
     def __str__(self):
         return self.source

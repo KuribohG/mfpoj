@@ -66,19 +66,31 @@ def contest_submit(request, **kwargs):
                              language=request.POST['language'], 
                              user=user, 
                              status='Pending', 
+                             from_contest=contest_id,	
+                             from_contest_problem=problem_id,	
                              length=len(request.POST['source']),
                              submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
                              time_used=0, 
                              memory_used=0, 
                              contest=contest, 
                              contest_problem=contest_problem,
-                             contest_user=contestuser,  
+                             contest_user=contestuser,
                          )
             submission.save()
 
+            contest_obj = json.loads(contestuser.stat)
+            if problem_id in contest_obj.keys():
+                pass
+            else:
+                contest_obj[problem_id] = 0
+                contestuser.stat = json.dumps(contest_obj)
+                contestuser.save()
+            
             user.submit += 1
             user.save()
             
+            contest_problem.submit += 1
+            contest_problem.save()
             
             p = contest_problem.problem
             p.submit += 1
@@ -111,13 +123,49 @@ def contest(request, contest_id):
     contest = Contest.objects.get(pk=contest_id)
     problem_list = contest.contestproblem_set.all()
     
-    context = {
-        'contest': contest, 
-        'problem_list': problem_list, 
-        'logined': int(logined), 
-        'name': request.session['username'] if logined else '', 
-        'page_name': 'contest',
-    }
+    for contest_user in contest.contestuser_set.all():
+        contest_user.score = 0
+        for problem in problem_list:
+            contest_obj = json.loads(contest_user.stat)
+            if problem.number in contest_obj:
+                contest_user.score += contest_obj[problem.number]
+        contest_user.save()
+    
+    if(logined):
+        join = 0
+        user = User.objects.filter(username=request.session['username'])[0]
+        for contest_user in contest.contestuser_set.all():
+            if contest_user.user == user:
+                join = 1
+        if join == 1:
+            contestuser = contest.contestuser_set.all().filter(user=user)[0]
+            obj = json.loads(contestuser.stat)
+            context = {
+                'stat': obj,
+                'join': 1,
+                'contest': contest, 
+                'problem_list': problem_list, 
+                'logined': 1,
+                'name': request.session['username'], 
+                'page_name': 'contest',
+            }
+        else:
+            context = {
+                'join': 0,
+                'contest': contest, 
+                'problem_list': problem_list, 
+                'logined': 1,
+                'name': request.session['username'], 
+                'page_name': 'contest',
+            }
+    else:
+        context = {
+            'contest': contest, 
+            'problem_list': problem_list, 
+            'logined': 0,
+            'name': '', 
+            'page_name': 'contest',
+        }
 
     return render(request, 'contest.html', context)
     
@@ -154,11 +202,21 @@ def contest_status(request, contest_id):
     }
     return render(request, 'contest_status.html',context)
 def contest_standings(request, contest_id):
+    
     contest = Contest.objects.get(pk=contest_id)
-    user_list = contest.contestuser_set.all()
-    user_list = list(user_list)
     problem_list = contest.contestproblem_set.all()
     
+    for contest_user in contest.contestuser_set.all():
+        contest_user.score = 0
+        for problem in problem_list:
+            contest_obj = json.loads(contest_user.stat)
+            if problem.number in contest_obj:
+                contest_user.score += contest_obj[problem.number]
+        contest_user.save()
+        
+    user_list = contest.contestuser_set.order_by("-score","user")
+    user_list = list(user_list)
+        
     #分页大法开启
     users_per_page = 50
     paginator = Paginator(user_list, users_per_page)

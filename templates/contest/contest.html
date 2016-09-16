@@ -29,7 +29,16 @@
       </thead>
       <tbody>
          
-   {% for problem in problem_list %}   
+   {% for problem in problem_list %}
+       {% if logined == 1 and join == 1%}
+	       {% for i,j in stat.items %}
+		   	   {% if i == problem.number and j == 100 %}
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #CEFFCE;} </style>
+		   	   {% elif i == problem.number and j != 100 %}
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #FFD2D2;} </style>
+		       {% endif %}
+	        {% endfor %}
+        {% endif %}
         <tr>
             <td>
                 

@@ -23,9 +23,9 @@
 					<tr>
 						<td>{{forloop.counter}}</td>
 						<td><a style=" text-decoration: none; color: #444;" href='/user/{{user.user}}/'>{{user.user}}</a></td>
-						<td>0</td>
+						<td><font color=#221ACE style="font-weight:bold">{{user.score}}</font></td>
                     	{% for problem in problem_list %}
-						<td class='well well-sm'>0</td>
+						<td class='well well-sm'>{{user.stat.problem.number}}</td><!--user.stat.(problem.number)不知道怎么写 留坑-->
 						{% endfor %}
 					</tr>              
 					{% endfor %} 

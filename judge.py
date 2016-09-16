@@ -9,6 +9,7 @@ django.setup()
 
 import lorun
 
+from contest.models import Contest, ContestProblem, ContestSubmission, ContestUser
 from oj.models import Problem, Submission, Waiting, User
 
 RESULT_STR = [
@@ -124,6 +125,15 @@ def run_testcases(waiting, exec_file):
     s.stat = json.dumps(obj)
     s.save()
     
+    if submission.from_contest != 0:
+        contest = Contest.objects.get(pk=submission.from_contest)
+        contestuser = contest.contestuser_set.all().filter(user=s)[0]
+        contest_problem = contest.contestproblem_set.filter(number=submission.from_contest_problem)[0]
+        contest_obj = json.loads(contestuser.stat)
+        contest_obj[contest_problem.number] = submission.score
+        contestuser.stat = json.dumps(contest_obj)
+        contestuser.save()
+    
     if submission.status == 'Accepted':
         submission.score = 100
         p = submission.problem
@@ -137,7 +147,11 @@ def run_testcases(waiting, exec_file):
             obj['%d'%problem_id] = 1
             s.stat = json.dumps(obj)
             s.save()
-    
+        contest_problem = contest.contestproblem_set.filter(number=submission.from_contest_problem)[0]
+        contest_problem.ac += 1
+        contest_problem.save()
+            
+            
     if len(result) == 0:
         submission.time_used = 0
     else:
