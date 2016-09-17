@@ -74,6 +74,8 @@ def contest_submit(request, **kwargs):
                                  status='Pending', 
                                  from_contest=contest_id,	
                                  from_contest_problem=problem_id,	
+                                 contest_start_time=contest.start,
+                                 contest_end_time=contest.end,
                                  length=len(request.POST['source']),
                                  submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
                                  time_used=0, 
@@ -138,6 +140,8 @@ def contest(request, contest_id):
                 contest_user.score += contest_obj[problem.number]
         contest_user.save()
     
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
+    
     if(logined):
         join = 0
         user = User.objects.filter(username=request.session['username'])[0]
@@ -148,6 +152,7 @@ def contest(request, contest_id):
             contestuser = contest.contestuser_set.all().filter(user=user)[0]
             obj = json.loads(contestuser.stat)
             context = {
+                'nowtime': nowtime,
                 'stat': obj,
                 'join': 1,
                 'contest': contest, 
@@ -158,6 +163,7 @@ def contest(request, contest_id):
             }
         else:
             context = {
+                'nowtime': nowtime,
                 'join': 0,
                 'contest': contest, 
                 'problem_list': problem_list, 
@@ -167,6 +173,7 @@ def contest(request, contest_id):
             }
     else:
         context = {
+            'nowtime': nowtime,
             'contest': contest, 
             'problem_list': problem_list, 
             'logined': 0,
@@ -198,8 +205,10 @@ def contest_status(request, contest_id):
     #分页大法结束
     
     logined = 'username' in request.session.keys()
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
     context = {
+        'nowtime': nowtime,
         'contest': contest, 
         'contest_id': contest_id, 
         'submission_list': submission_list, 
@@ -232,16 +241,18 @@ def contest_standings(request, contest_id):
     else:
         nowpage = 1
     try:
-        submission_list = paginator.page(nowpage) 
+        user_list = paginator.page(nowpage) 
     except PageNotAnInteger:
-        submission_list = paginator.page(1)
+        user_list = paginator.page(1)
     except EmptyPage:
-        submission_list = paginator.page(paginator.num_pages)
+        user_list = paginator.page(paginator.num_pages)
     #分页大法结束
     
     logined = 'username' in request.session.keys()
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
     context = {
+        'nowtime': nowtime,
         'contest': contest, 
         'contest_id': contest_id, 
         'user_list': user_list, 

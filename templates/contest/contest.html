@@ -30,6 +30,15 @@
       <tbody>
          
    {% for problem in problem_list %}
+{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+       {% if logined == 1 and join == 1%}
+	       {% for i,j in stat.items %}
+		   	   {% if i == problem.number %}
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #FDFFAA;} </style>
+		       {% endif %}
+	        {% endfor %}
+        {% endif %}
+{% else %}
        {% if logined == 1 and join == 1%}
 	       {% for i,j in stat.items %}
 		   	   {% if i == problem.number and j == 100 %}
@@ -39,6 +48,7 @@
 		       {% endif %}
 	        {% endfor %}
         {% endif %}
+{% endif %}
         <tr>
             <td>
                 

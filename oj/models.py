@@ -1,3 +1,4 @@
+import time
 from django.db import models
 
 class Problem(models.Model):
@@ -61,6 +62,8 @@ class Submission(models.Model):
     score = models.IntegerField(default=0)
     from_contest = models.IntegerField(default=0)
     from_contest_problem = models.CharField(max_length=10,default='0')
+    contest_start_time = models.DateTimeField(default=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)))
+    contest_end_time = models.DateTimeField(default=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)))
 
     def __str__(self):
         return self.source

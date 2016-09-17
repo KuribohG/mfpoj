@@ -8,6 +8,7 @@
 <div class="container">
 <title>比赛排名 - {{contest_id}}</title>
 
+<center>
    <table id='rank' width="100%" style="text-align:center">
                 <thead>
                     <tr class="toprow">
@@ -23,32 +24,41 @@
 					<tr>
 						<td>{{forloop.counter}}</td>
 						<td><a style=" text-decoration: none; color: #444;" href='/user/{{user.user}}/'>{{user.user}}</a></td>
+					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+                        <td><font color=#8E7479><b>?</font></b></td>
+					{% else %}
 						<td><font color=#221ACE style="font-weight:bold">{{user.score}}</font></td>
+					{% endif %}
+					
                     	{% for problem in problem_list %}
-						<td class='well well-sm'>{{user.stat.problem.number}}</td><!--user.stat.(problem.number)不知道怎么写 留坑-->
+					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+                        <td class='well well-sm'>?</td>
+					{% else %}
+						<td class='well well-sm'>0{{user.stat.problem.number}}</td><!--user.stat.(problem.number)不知道怎么写 留坑-->
+					{% endif %}
 						{% endfor %}
 					</tr>              
 					{% endfor %} 
 	 </table>
 
-
-</center>
+<br>
 	<!--分页大法开启-->
- {% if submission_list.has_previous %}
-        <a class='paginator' title='上一页' href='?page={{ submission_list.previous_page_number }}'><span>&lt;&lt;</span></a>
+ {% if user_list.has_previous %}
+        <a class='paginator' title='上一页' href='?page={{ user_list.previous_page_number }}'><span>&lt;&lt;</span></a>
  {% endif %}
- {% for page in submission_list.paginator.page_range %}
-     {% if page == submission_list.number %}
+ {% for page in user_list.paginator.page_range %}
+     {% if page == user_list.number %}
          <a class='paginator_current' title='当前页:{{ page }}'><span>{{ page }}</span></a>
      {% else %}
          <a class='paginator' href='?page={{ page }}' title='{{ page }}'><span>{{ page }}</span></a>
      {% endif %}
      
  {% endfor %}
- {% if submission_list.has_next %}
-     <a class='paginator' title='下一页' href='?page={{ submission_list.next_page_number }}'><span>&gt;&gt;</span></a>
+ {% if user_list.has_next %}
+     <a class='paginator' title='下一页' href='?page={{ user_list.next_page_number }}'><span>&gt;&gt;</span></a>
  {% endif %}
 	<!--分页大法结束-->
 </div>
+</center>
 <p>&nbsp;</p>
 

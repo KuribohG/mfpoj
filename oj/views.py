@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Problem, Submission, Waiting, User
+from contest.models import Contest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def index(request):
@@ -59,10 +60,11 @@ def user(request, user_id):
     
 def code(request, submission_id):
     submission = Submission.objects.get(pk=submission_id)
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     if('username' in request.session.keys()):
-        context = {'submission': submission,'logined': 1, 'name': request.session['username']}
+        context = {'nowtime': nowtime, 'submission': submission,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'submission': submission,'logined': 0, 'name': ''}
+        context = {'nowtime': nowtime, 'submission': submission,'logined': 0, 'name': ''}
     return render(request, 'code.html', context)
 
 def submit(request, **kwargs):
@@ -218,6 +220,11 @@ def status(request):
     submission_list = list(submission_list)
     submission_list.reverse()
     
+    for submission in submission_list:
+        if submission.from_contest != 0:
+            contest = Contest.objects.get(pk=submission.from_contest)
+            submission.contest_start_time = contest.start
+            submission.contest_end_time = contest.end
     #分页大法开启
     submissions_per_page = 10
     paginator = Paginator(submission_list, submissions_per_page)
@@ -232,11 +239,11 @@ def status(request):
     except EmptyPage:
         submission_list = paginator.page(paginator.num_pages)
     #分页大法结束
-    
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     if('username' in request.session.keys()):
-        context = {'submission_list': submission_list,'logined': 1, 'name': request.session['username']}
+        context = {'nowtime': nowtime, 'submission_list': submission_list, 'logined': 1, 'name': request.session['username']}
     else:
-        context = {'submission_list': submission_list,'logined': 0, 'name': ''}
+        context = {'nowtime': nowtime, 'submission_list': submission_list, 'logined': 0, 'name': ''}
     return render(request, 'status.html',context)
 
 def modify(request):

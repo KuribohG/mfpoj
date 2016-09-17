@@ -29,8 +29,10 @@
     <td align=center><a style=" text-decoration: none; color: #444;" href="{% url 'problem' submission.problem.id %}" title="">{{submission.problem.id}}</a></td>
 		
 		<td align=center><a style=" text-decoration: none; color: #444;" href="{% url 'user' submission.user.username %}" title="">{{submission.user.username}}</a></td>
-    
- {% if submission.status == "Accepted" %}
+		
+ {% if submission.from_contest != 0 and nowtime >= submission.contest_start_time|date:"Y-m-d H:i:s" and nowtime <= submission.contest_end_time|date:"Y-m-d H:i:s" %}
+    <td align=center><font color=#8E7479>Hidden</font></td>
+ {% elif submission.status == "Accepted" %}
     <td align=center><font color=#009100>{{submission.status}}</font></td>
  {% elif submission.status == "Compile Error" %}
     <td align=center><font color=#0000E3>{{submission.status}}</font></td>
@@ -42,7 +44,9 @@
     <td align=center><font color=#FF0000>{{submission.status}}</font></td>
  {% endif %}
  
- {% if submission.score == 100 %}
+ {% if submission.from_contest != 0 and nowtime >= submission.contest_start_time|date:"Y-m-d H:i:s" and nowtime <= submission.contest_end_time|date:"Y-m-d H:i:s" %}
+    <td align=center><b><font color=#8E7479>?</font></b></td>
+ {% elif submission.score == 100 %}
     <td align=center><b><font color=#009100>{{submission.score}}</font></b></td>
  {% elif submission.score == 0 %}
     <td align=center><b><font color=#FF0000>{{submission.score}}</font></b></td>
@@ -50,8 +54,17 @@
     <td align=center><b><font color=#EAC100>{{submission.score}}</font></b></td>
  {% endif %}
     
+ {% if submission.from_contest != 0 and nowtime >= submission.contest_start_time|date:"Y-m-d H:i:s" and nowtime <= submission.contest_end_time|date:"Y-m-d H:i:s" %}
+    <td align=center>?</td>
+ {% else %}
     <td align=center>{{submission.time_used}}</td>
+ {% endif %}
+ 
+ {% if submission.from_contest != 0 and nowtime >= submission.contest_start_time|date:"Y-m-d H:i:s" and nowtime <= submission.contest_end_time|date:"Y-m-d H:i:s" %}
+    <td align=center>?</td>
+ {% else %}
     <td align=center>{{submission.memory_used}}</td>
+ {% endif %}
     
 {% if name == submission.user.username %}
     <td align=center><a style=" text-decoration: none; color: #005AB5;" href="{% url 'code' submission.id %}" title="">{{submission.language}}</a></td>
