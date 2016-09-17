@@ -57,7 +57,7 @@ class Submission(models.Model):
     time_used = models.IntegerField()
     memory_used = models.IntegerField()
     length = models.IntegerField()
-    submit_time = models.TextField()
+    submit_time = models.DateTimeField()
     score = models.IntegerField(default=0)
     from_contest = models.IntegerField(default=0)
     from_contest_problem = models.CharField(max_length=10,default='0')

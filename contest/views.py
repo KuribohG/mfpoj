@@ -44,71 +44,78 @@ def contest_submit(request, **kwargs):
     if problem_id_letter is None:
         problem_id_letter = 'A'
 
+    error_message = ""
     if request.method == 'POST':
         if not "problem_id" in request.POST.keys():
             return HttpResponse("Please tell me the problem ID.")
         if logined:
             contest = Contest.objects.get(pk=contest_id)
-            problem_id = request.POST["problem_id"]
-            contest_problem = contest.contestproblem_set.filter(number=problem_id)[0]
-            user = User.objects.filter(username=request.session['username'])[0]
-            registered = user.contestuser_set.filter(contest=contest).exists()
-            if not registered:
-                contestuser = ContestUser(
-                                  user=user, 
-                                  contest=contest, 
-                              )
-                contestuser.save()
-            contestuser = contest.contestuser_set.all().filter(user=user)[0]
-            submission = ContestSubmission(
-                             problem=contest_problem.problem, 
-                             source=request.POST['source'], 
-                             language=request.POST['language'], 
-                             user=user, 
-                             status='Pending', 
-                             from_contest=contest_id,	
-                             from_contest_problem=problem_id,	
-                             length=len(request.POST['source']),
-                             submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
-                             time_used=0, 
-                             memory_used=0, 
-                             contest=contest, 
-                             contest_problem=contest_problem,
-                             contest_user=contestuser,
-                         )
-            submission.save()
+            if time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))<contest.start.strftime('%Y-%m-%d %H:%M:%S'):
+                return HttpResponse("Contest not started!")
+            elif time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))>contest.end.strftime('%Y-%m-%d %H:%M:%S'):
+                return HttpResponse("Contest ended!")
+            else:
+                problem_id = request.POST["problem_id"]
+                contest_problem = contest.contestproblem_set.filter(number=problem_id)[0]
+                user = User.objects.filter(username=request.session['username'])[0]
+                registered = user.contestuser_set.filter(contest=contest).exists()
+                if not registered:
+                    contestuser = ContestUser(
+                                      user=user, 
+                                      contest=contest, 
+                                  )
+                    contestuser.save()
+                contestuser = contest.contestuser_set.all().filter(user=user)[0]
+                submission = ContestSubmission(
+                                 problem=contest_problem.problem, 
+                                 source=request.POST['source'], 
+                                 language=request.POST['language'], 
+                                 user=user, 
+                                 status='Pending', 
+                                 from_contest=contest_id,	
+                                 from_contest_problem=problem_id,	
+                                 length=len(request.POST['source']),
+                                 submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
+                                 time_used=0, 
+                                 memory_used=0, 
+                                 contest=contest, 
+                                 contest_problem=contest_problem,
+                                 contest_user=contestuser,
+                             )
+                submission.save()
 
-            contest_obj = json.loads(contestuser.stat)
-            if problem_id in contest_obj.keys():
-                pass
-            else:
-                contest_obj[problem_id] = 0
-                contestuser.stat = json.dumps(contest_obj)
-                contestuser.save()
+                contest_obj = json.loads(contestuser.stat)
+                if problem_id in contest_obj.keys():
+                    pass
+                else:
+                    contest_obj[problem_id] = 0
+                    contestuser.stat = json.dumps(contest_obj)
+                    contestuser.save()
             
-            user.submit += 1
-            user.save()
-            
-            contest_problem.submit += 1
-            contest_problem.save()
-            
-            p = contest_problem.problem
-            p.submit += 1
-            p.save()
-            obj = json.loads(user.stat)
-            if '%d'%p.id in obj.keys():
-                pass
-            else:
-                obj['%d'%p.id] = 0
-                user.stat = json.dumps(obj)
+                user.submit += 1
                 user.save()
-
-            waiting=Waiting(submission=submission.submission_ptr)
-            waiting.save()
-        return HttpResponseRedirect('/contest/'+str(contest_id)+'/status')
+                
+                contest_problem.submit += 1
+                contest_problem.save()
+                
+                p = contest_problem.problem
+                p.submit += 1
+                p.save()
+                obj = json.loads(user.stat)
+                if '%d'%p.id in obj.keys():
+                    pass
+                else:
+                    obj['%d'%p.id] = 0
+                    user.stat = json.dumps(obj)
+                    user.save()
+    
+                waiting=Waiting(submission=submission.submission_ptr)
+                waiting.save()
+                return HttpResponseRedirect('/contest/'+str(contest_id)+'/status')
 
     contest = Contest.objects.get(pk=contest_id)
     context = {
+        'error_message': error_message,
         'contest': contest, 
         'contest_id': contest_id, 
         'problem_id_letter': problem_id_letter, 

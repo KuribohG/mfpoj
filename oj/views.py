@@ -74,7 +74,7 @@ def submit(request, **kwargs):
                              language=request.POST['language'],
                              user=User.objects.filter(username=request.session['username'])[0],
                              length=len(request.POST['source']),
-                             submit_time=time.strftime('%Y-%m-%d %X', time.localtime(time.time()+3600*8)),
+                             submit_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)),
                              status="Pending", 
                              score=0,
                              time_used=0, 
