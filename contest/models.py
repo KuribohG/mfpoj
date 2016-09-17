@@ -15,18 +15,9 @@ class ContestUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
     
-    def stat_default():
-        return {"Accepted": 0, 
-                "Presentation Error": 0, 
-                "Time Limit Exceeded": 0, 
-                "Memory Limit Exceeded": 0, 
-                "Wrong Answer": 0, 
-                "Runtime Error": 0, 
-                "Output Limit Exceeded": 0, 
-                "Compile Error": 0, 
-                "System Error": 0, 
-               }
-    stat = models.TextField(default=stat_default())
+    def contest_stat_default():
+        return {}
+    stat = models.TextField(default=contest_stat_default())
 
     def __str__(self):
         return self.contest.title + self.user.username

@@ -93,23 +93,9 @@ def contest_submit(request, **kwargs):
                     contest_obj[problem_id] = 0
                     contestuser.stat = json.dumps(contest_obj)
                     contestuser.save()
-            
-                user.submit += 1
-                user.save()
                 
                 contest_problem.submit += 1
                 contest_problem.save()
-                
-                p = contest_problem.problem
-                p.submit += 1
-                p.save()
-                obj = json.loads(user.stat)
-                if '%d'%p.id in obj.keys():
-                    pass
-                else:
-                    obj['%d'%p.id] = 0
-                    user.stat = json.dumps(obj)
-                    user.save()
     
                 waiting=Waiting(submission=submission.submission_ptr)
                 waiting.save()

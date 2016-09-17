@@ -69,12 +69,21 @@
                     {{problem.problem.title}}</a>
             </td>
            
+{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+            <td>
+                    ?          
+            </td>
+            <td>
+                    ?         
+            </td>
+{% else %}
             <td>
                     {{problem.ac}}          
             </td>
             <td>
                     {{problem.submit}}          
             </td>
+{% endif %}
         </tr>
       {% endfor %} 
         

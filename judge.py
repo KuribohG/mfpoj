@@ -120,10 +120,6 @@ def run_testcases(waiting, exec_file):
         submission.score = int(round(100.0*ac/testcases))
     
     s = User.objects.filter(username = submission.user.username)[0]
-    obj = json.loads(s.stat)
-    obj[submission.status] += 1
-    s.stat = json.dumps(obj)
-    s.save()
     
     if submission.from_contest != 0:
         contest = Contest.objects.get(pk=submission.from_contest)
@@ -133,23 +129,31 @@ def run_testcases(waiting, exec_file):
         contest_obj[contest_problem.number] = submission.score
         contestuser.stat = json.dumps(contest_obj)
         contestuser.save()
+    else:
+        obj = json.loads(s.stat)
+        obj[submission.status] += 1
+        s.stat = json.dumps(obj)
+        s.save()
     
     if submission.status == 'Accepted':
-        submission.score = 100
-        p = submission.problem
-        p.ac += 1
-        p.save()
-        problem_id = p.id
-        if '%d'%problem_id in obj.keys() and obj['%d'%problem_id] == 1:
-            pass
+        if submission.from_contest != 0:
+            submission.score = 100
+            contest_problem = contest.contestproblem_set.filter(number=submission.from_contest_problem)[0]
+            contest_problem.ac += 1
+            contest_problem.save()
         else:
-            s.ac += 1
-            obj['%d'%problem_id] = 1
-            s.stat = json.dumps(obj)
-            s.save()
-        contest_problem = contest.contestproblem_set.filter(number=submission.from_contest_problem)[0]
-        contest_problem.ac += 1
-        contest_problem.save()
+            submission.score = 100
+            p = submission.problem
+            p.ac += 1
+            p.save()
+            problem_id = p.id
+            if '%d'%problem_id in obj.keys() and obj['%d'%problem_id] == 1:
+                pass
+            else:
+                s.ac += 1
+                obj['%d'%problem_id] = 1
+                s.stat = json.dumps(obj)
+                s.save()
             
             
     if len(result) == 0:
