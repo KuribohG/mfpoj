@@ -23,7 +23,16 @@
       </thead>
       <tbody>
          
-   {% for contest in contest_list %}   
+   {% for contest in contest_list %}
+		{% for contest_user in contest.contestuser_set.all %}
+  	     {% if contest_user.user.username == name %}
+         	{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #FDFFAA;} </style>
+  		    {% else %} 
+		   	 <style> .table-striped > tbody > tr:nth-of-type({{forloop.parentloop.counter}}) {background-color: #CEFFCE;} </style>
+  		    {% endif %}
+  		 {% endif %}
+  		{% endfor %}
         <tr>
             <td>
             </td>
@@ -48,7 +57,7 @@
 {% elif nowtime < contest.start|date:"Y-m-d H:i:s" %}
             <td><font color=#009100> Scheduled </font></td>
 {% elif nowtime > contest.end|date:"Y-m-d H:i:s" %}
-            <td><font color=#FF0000> Finished </font></td>
+            <td><font color=#999> Finished </font></td>
 {% endif %}
            
         </tr>

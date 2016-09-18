@@ -20,7 +20,7 @@ def problemset(request):
     problem_list = Problem.objects.all()
     
     #分页大法开启
-    problems_per_page = 50 #每页多少道题
+    problems_per_page = 20 #每页多少道题
     paginator = Paginator(problem_list, problems_per_page)
     if 'page' in request.GET.keys():
         nowpage = request.GET['page']
