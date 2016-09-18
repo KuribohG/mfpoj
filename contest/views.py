@@ -26,7 +26,9 @@ def contests(request):
 
     logined = 'username' in request.session.keys()
     nowpage = request.GET['page'] if 'page' in request.GET.keys() else 1
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     context = {
+        'nowtime': nowtime,
         'contest_list': paginate(contest_list, 10, nowpage), 
         'logined': int(logined), 
         'name': request.session['username'] if logined else '', 

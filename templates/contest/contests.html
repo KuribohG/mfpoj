@@ -43,7 +43,13 @@
             </td>
             <td> {{ contest.start|date:"Y-m-d H:i:s" }} </td>
             <td> {{ contest.end|date:"Y-m-d H:i:s" }} </td>
-            <td> </td>
+{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+            <td><font color=#EAC100> Running </font></td>
+{% elif nowtime < contest.start|date:"Y-m-d H:i:s" %}
+            <td><font color=#009100> Scheduled </font></td>
+{% elif nowtime > contest.end|date:"Y-m-d H:i:s" %}
+            <td><font color=#FF0000> Finished </font></td>
+{% endif %}
            
         </tr>
       {% endfor %} 
