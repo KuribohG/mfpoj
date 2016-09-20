@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿﻿{% load dot %}
+<style type="text/css">
 <!--
 -->
 </style>
@@ -34,12 +35,17 @@
 					{% else %}
 						<td><font color=#221ACE style="font-weight:bold">{{user.score}}</font></td>
 					{% endif %}
-					
                     	{% for problem in problem_list %}
 					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
                         <td class='well well-sm'>?</td>
 					{% else %}
-						<td class='well well-sm'>0{{user.stat.problem.number}}</td><!--user.stat.(problem.number)不知道怎么写 留坑-->
+					    {% if user.stat|dot:problem.number == 100 %}
+						<td style="background:#CEFFCE" class='well well-sm'>100</td>
+					    {% elif user.stat|dot:problem.number == -1 %}
+						<td class='well well-sm'>0</td>
+						{% else %}
+						<td style="background:#FFD2D2" class='well well-sm'>{{user.stat|dot:problem.number}}</td>
+						{% endif %}
 					{% endif %}
 						{% endfor %}
 					</tr>             
