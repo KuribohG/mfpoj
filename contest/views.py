@@ -220,8 +220,14 @@ def contest_standings(request, contest_id):
                 contest_user.score += contest_obj[problem.number]
         contest_user.save()
         
-    user_list = contest.contestuser_set.order_by("-score","user")
-    user_list = list(user_list)
+    if time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))>=contest.start.strftime('%Y-%m-%d %H:%M:%S') and time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))<=contest.end.strftime('%Y-%m-%d %H:%M:%S'):
+        user_list = contest.contestuser_set.order_by("user")
+        user_list = list(user_list)
+        all_user_list = user_list
+    else:
+        user_list = contest.contestuser_set.order_by("-score","user")
+        user_list = list(user_list)
+        all_user_list = user_list
         
     #分页大法开启
     users_per_page = 50
@@ -245,6 +251,7 @@ def contest_standings(request, contest_id):
         'nowtime': nowtime,
         'contest': contest, 
         'contest_id': contest_id, 
+        'all_user_list': all_user_list, 
         'user_list': user_list, 
         'problem_list': problem_list,
         'logined': int(logined),  

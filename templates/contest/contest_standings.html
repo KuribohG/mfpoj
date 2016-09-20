@@ -20,9 +20,14 @@
 						{% endfor %}
 					</tr>
                 </thead>
-                	{% for user in user_list%}
+    			 {% for user in all_user_list %}
+    			  {% if user in user_list %}
 					<tr>
+					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+						<td>?</td>
+					{% else %}
 						<td>{{forloop.counter}}</td>
+					{% endif %}
 						<td><a style=" text-decoration: none; color: #444;" href='/user/{{user.user}}/'>{{user.user}}</a></td>
 					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
                         <td><font color=#8E7479><b>?</font></b></td>
@@ -37,8 +42,9 @@
 						<td class='well well-sm'>0{{user.stat.problem.number}}</td><!--user.stat.(problem.number)不知道怎么写 留坑-->
 					{% endif %}
 						{% endfor %}
-					</tr>              
-					{% endfor %} 
+					</tr>             
+				 {% endif %} 
+				{% endfor %} 
 	 </table>
 
 <br>
