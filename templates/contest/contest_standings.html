@@ -37,7 +37,11 @@
 					{% endif %}
                     	{% for problem in problem_list %}
 					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+					    {% if user.stat|dot:problem.number == -1 %}
                         <td class='well well-sm'>?</td>
+					    {% else %}
+                        <td style="background:#FDFFAA" class='well well-sm'>?</td>
+                        {% endif %}
 					{% else %}
 					    {% if user.stat|dot:problem.number == 100 %}
 						<td style="background:#CEFFCE" class='well well-sm'>100</td>
