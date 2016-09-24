@@ -31,7 +31,7 @@
 	
 			<td align=center><a style=" text-decoration: none; color: #444;" href="{% url 'user' submission.user.username %}" title="">{{submission.user.username}}</a></td>
 	    
-	 {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+	 {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
         <td align=center><font color=#8E7479>Hidden</font></td>
 	 {% elif submission.status == "Accepted" %}
 	    <td align=center><font color=#009100>{{submission.status}}</font></td>
@@ -45,7 +45,7 @@
 	    <td align=center><font color=#FF0000>{{submission.status}}</font></td>
 	 {% endif %}
 	 
- {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+ {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
     <td align=center><b><font color=#8E7479>?</font></b></td>
  {% elif submission.score == 100 %}
     <td align=center><b><font color=#009100>{{submission.score}}</font></b></td>
@@ -55,13 +55,13 @@
     <td align=center><b><font color=#EAC100>{{submission.score}}</font></b></td>
  {% endif %}
  
- {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+ {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
     <td align=center>?</td>
  {% else %}
     <td align=center>{{submission.time_used}}</td>
  {% endif %}
  
- {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+ {% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
     <td align=center>?</td>
  {% else %}
     <td align=center>{{submission.memory_used}}</td>

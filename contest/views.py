@@ -148,6 +148,7 @@ def contest(request, contest_id):
                 'contest': contest, 
                 'problem_list': problem_list, 
                 'logined': 1,
+                'root': User.objects.filter(username=request.session['username'])[0].root,
                 'name': request.session['username'], 
                 'page_name': 'contest',
             }
@@ -158,6 +159,7 @@ def contest(request, contest_id):
                 'contest': contest, 
                 'problem_list': problem_list, 
                 'logined': 1,
+                'root': User.objects.filter(username=request.session['username'])[0].root,
                 'name': request.session['username'], 
                 'page_name': 'contest',
             }
@@ -167,6 +169,7 @@ def contest(request, contest_id):
             'contest': contest, 
             'problem_list': problem_list, 
             'logined': 0,
+            'root': 0,
             'name': '', 
             'page_name': 'contest',
         }
@@ -203,6 +206,7 @@ def contest_status(request, contest_id):
         'contest_id': contest_id, 
         'submission_list': submission_list, 
         'logined': int(logined),  
+        'root': User.objects.filter(username=request.session['username'])[0].root if logined else 0,
         'name': request.session['username'] if logined else '',
         'page_name': 'status',
     }
@@ -220,7 +224,10 @@ def contest_standings(request, contest_id):
                 contest_user.score += contest_obj[problem.number]
         contest_user.save()
         
-    if time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))>=contest.start.strftime('%Y-%m-%d %H:%M:%S') and time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))<=contest.end.strftime('%Y-%m-%d %H:%M:%S'):
+    logined = 'username' in request.session.keys()
+    root = User.objects.filter(username=request.session['username'])[0].root if logined else 0
+    
+    if time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))>=contest.start.strftime('%Y-%m-%d %H:%M:%S') and time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))<=contest.end.strftime('%Y-%m-%d %H:%M:%S') and root == 0:
         user_list = contest.contestuser_set.order_by("user")
         user_list = list(user_list)
         all_user_list = user_list
@@ -244,7 +251,6 @@ def contest_standings(request, contest_id):
         user_list = paginator.page(paginator.num_pages)
     #分页大法结束
     
-    logined = 'username' in request.session.keys()
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
     context = {
@@ -255,7 +261,9 @@ def contest_standings(request, contest_id):
         'user_list': user_list, 
         'problem_list': problem_list,
         'logined': int(logined),  
+        'root': User.objects.filter(username=request.session['username'])[0].root if logined else 0,
         'name': request.session['username'] if logined else '',
+        'root': root,
         'page_name': 'standings',
     }
     return render(request, 'contest_standings.html',context)

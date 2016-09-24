@@ -24,19 +24,19 @@
     			 {% for user in all_user_list %}
     			  {% if user in user_list %}
 					<tr>
-					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
 						<td>?</td>
 					{% else %}
 						<td>{{forloop.counter}}</td>
 					{% endif %}
 						<td><a style=" text-decoration: none; color: #444;" href='/user/{{user.user}}/'>{{user.user}}</a></td>
-					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
                         <td><font color=#8E7479><b>?</font></b></td>
 					{% else %}
 						<td><font color=#221ACE style="font-weight:bold">{{user.score}}</font></td>
 					{% endif %}
                     	{% for problem in problem_list %}
-					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" %}
+					{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
 					    {% if user.stat|dot:problem.number == -1 %}
                         <td class='well well-sm'>?</td>
 					    {% else %}

@@ -241,9 +241,10 @@ def status(request):
     #分页大法结束
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     if('username' in request.session.keys()):
-        context = {'nowtime': nowtime, 'submission_list': submission_list, 'logined': 1, 'name': request.session['username']}
+        user = User.objects.filter(username=request.session['username'])[0]
+        context = {'nowtime': nowtime, 'submission_list': submission_list, 'logined': 1, 'root': user.root, 'name': request.session['username']}
     else:
-        context = {'nowtime': nowtime, 'submission_list': submission_list, 'logined': 0, 'name': ''}
+        context = {'nowtime': nowtime, 'submission_list': submission_list, 'logined': 0, 'root': 0,	'name': ''}
     return render(request, 'status.html',context)
 
 def modify(request):
