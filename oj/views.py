@@ -70,39 +70,46 @@ def code(request, submission_id):
 def submit(request, **kwargs):
     if request.method == 'POST':
         if 'username' in request.session.keys():
-            submission = Submission(
-                             problem=Problem.objects.get(pk=request.POST['problem_id']),
-                             source=request.POST['source'],
-                             language=request.POST['language'],
-                             user=User.objects.filter(username=request.session['username'])[0],
-                             length=len(request.POST['source']),
-                             submit_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)),
-                             status="Pending", 
-                             score=0,
-                             time_used=0, 
-                             memory_used=0,
-                         )
-            submission.save()
-            waiting=Waiting(submission=submission)
-            waiting.save()
-            
-            s = User.objects.filter(username=request.session['username'])[0]
-            s.submit += 1
-            s.save()
-            
-            p = Problem.objects.get(pk=request.POST['problem_id'])
-            p.submit += 1
-            p.save()
-            
-            obj = json.loads(s.stat)
-            if '%d'%p.id in obj.keys():
-                pass
-            else:
-                obj['%d'%p.id] = 0
-                s.stat = json.dumps(obj)
+            running = 0
+            for contest in Contest.objects.all():
+                if time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)) >= contest.start.strftime('%Y-%m-%d %H:%M:%S') and time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)) <= contest.end.strftime('%Y-%m-%d %H:%M:%S'):
+                    running = 1
+            if running == 1 and User.objects.filter(username=request.session['username'])[0].root == 1:
+                submission = Submission(
+                                 problem=Problem.objects.get(pk=request.POST['problem_id']),
+                                 source=request.POST['source'],
+                                 language=request.POST['language'],
+                                 user=User.objects.filter(username=request.session['username'])[0],
+                                 length=len(request.POST['source']),
+                                 submit_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)),
+                                 status="Pending", 
+                                 score=0,
+                                 time_used=0, 
+                                 memory_used=0,
+                             )
+                submission.save()
+                waiting=Waiting(submission=submission)
+                waiting.save()
+                
+                s = User.objects.filter(username=request.session['username'])[0]
+                s.submit += 1
                 s.save()
                 
-            return HttpResponseRedirect('/status')
+                p = Problem.objects.get(pk=request.POST['problem_id'])
+                p.submit += 1
+                p.save()
+                
+                obj = json.loads(s.stat)
+                if '%d'%p.id in obj.keys():
+                    pass
+                else:
+                    obj['%d'%p.id] = 0
+                    s.stat = json.dumps(obj)
+                    s.save()
+                    
+                return HttpResponseRedirect('/status')
+            else:
+                return HttpResponse("There is a contest running.")
         else:
             return HttpResponse("You should login first.")
     if 'problem_id' in kwargs.keys():
