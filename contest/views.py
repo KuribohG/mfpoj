@@ -275,12 +275,15 @@ def contest_problem(request, contest_id, problem_id):
     real_id = contest_problem.problem.id
     problem = Problem.objects.get(pk=real_id)
 
+    nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     context = {
+        'nowtime': nowtime,
         'contest': contest, 
         'problem_id_letter':problem_id,
         'contest_id': contest_id, 
         'problem': problem,
         'logined': int(logined),  
+        'root': User.objects.filter(username=request.session['username'])[0].root if logined else 0,
         'name': request.session['username'] if logined else '',
         'page_name': 'problem',
     }

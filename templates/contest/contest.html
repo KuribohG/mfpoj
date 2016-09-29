@@ -57,6 +57,12 @@
            <td>
                     {{problem.number}}
             </td>
+            
+{% if nowtime < contest.start|date:"Y-m-d H:i:s" and root == 0 %}
+            <td>
+                ?
+            </td>
+{% else %}
             <td>
                 
                 <a style=" text-decoration: none;" href="{% url 'contest_problem' contest_id=contest.id problem_id=problem.number %}" title="">
@@ -68,8 +74,9 @@
 		</style>
                     {{problem.problem.title}}</a>
             </td>
+{% endif %}
            
-{% if nowtime >= contest.start|date:"Y-m-d H:i:s" and nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
+{% if nowtime <= contest.end|date:"Y-m-d H:i:s" and root == 0 %}
             <td>
                     ?          
             </td>
