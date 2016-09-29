@@ -34,20 +34,23 @@ def problemset(request):
         problem_list = paginator.page(paginator.num_pages)
     #分页大法结束
     
+    
     if('username' in request.session.keys()):
-        s=User.objects.filter(username=request.session['username'])[0]
+        s = 	User.objects.filter(username=request.session['username'])[0]
         obj = json.loads(s.stat)
-        context = {'stat': obj,'problem_list': problem_list,'logined': 1, 'name': request.session['username']}
+        root = s.root
+        context = {'stat': obj,'problem_list': problem_list,'logined': 1, 'root': root, 'name': request.session['username']}
     else:
-        context = {'problem_list': problem_list,'logined': 0, 'name': ''}
+        context = {'problem_list': problem_list,'logined': 0, 'root': 0, 'name': ''}
     return render(request, 'problemset.html', context)
 
 def problem(request, problem_id):
     problem = Problem.objects.get(pk=problem_id)
+    root = User.objects.filter(username=request.session['username'])[0].root
     if('username' in request.session.keys()):
-        context = {'problem': problem,'logined': 1, 'name': request.session['username']}
+        context = {'problem': problem,'logined': 1, 'root': root, 'name': request.session['username']}
     else:
-        context = {'problem': problem,'logined': 0, 'name': ''}
+        context = {'problem': problem,'logined': 0, 'root': 0, 'name': ''}
     return render(request, 'problem.html', context)
     
 def user(request, user_id):
@@ -74,7 +77,9 @@ def submit(request, **kwargs):
             for contest in Contest.objects.all():
                 if time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)) >= contest.start.strftime('%Y-%m-%d %H:%M:%S') and time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8)) <= contest.end.strftime('%Y-%m-%d %H:%M:%S'):
                     running = 1
-            if running == 1 and User.objects.filter(username=request.session['username'])[0].root == 1:
+            if Problem.objects.get(pk=request.POST['problem_id']).hide == 1:
+                running = 2
+            if running == 0 or User.objects.filter(username=request.session['username'])[0].root == 1:
                 submission = Submission(
                                  problem=Problem.objects.get(pk=request.POST['problem_id']),
                                  source=request.POST['source'],
@@ -108,8 +113,10 @@ def submit(request, **kwargs):
                     s.save()
                     
                 return HttpResponseRedirect('/status')
-            else:
+            elif running == 1:
                 return HttpResponse("There is a contest running.")
+            elif running == 2:
+                return HttpResponse("You can't submit to this problem.")
         else:
             return HttpResponse("You should login first.")
     if 'problem_id' in kwargs.keys():

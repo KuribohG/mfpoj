@@ -263,7 +263,6 @@ def contest_standings(request, contest_id):
         'logined': int(logined),  
         'root': User.objects.filter(username=request.session['username'])[0].root if logined else 0,
         'name': request.session['username'] if logined else '',
-        'root': root,
         'page_name': 'standings',
     }
     return render(request, 'contest_standings.html',context)

@@ -6,6 +6,7 @@ class Problem(models.Model):
     description = models.TextField()
     submit = models.IntegerField()
     ac = models.IntegerField()
+    hide = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

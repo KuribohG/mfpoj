@@ -10,10 +10,13 @@
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="jumbotron">
+			{% if problem.hide == True and root == 0 %}<h1 align="center">You can't view this problem temporarily.</h1>
+			{% else %}
 				<h1 align="center"><span class="STYLE1">{{ problem.title }} </span></h1>
 				<p><span class="STYLE2">{{ problem.description|djangomarkdown }} </span></p>
 				<p align="center">
 					 <a class="btn btn-primary btn-large" href="{% url 'submit' problem.id %}">Submit</a>				</p>
+		    {% endif %}
 		  </div>
 		</div>
 	</div>
