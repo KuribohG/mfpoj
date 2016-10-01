@@ -9,6 +9,7 @@ from contest.models import Contest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def index(request):
+    
     if('username' in request.session.keys()):
         context = {'logined': 1, 'name': request.session['username']}
     else:
@@ -36,7 +37,7 @@ def problemset(request):
     
     
     if('username' in request.session.keys()):
-        s = 	User.objects.filter(username=request.session['username'])[0]
+        s = User.objects.filter(username=request.session['username'])[0]
         obj = json.loads(s.stat)
         root = s.root
         context = {'stat': obj,'problem_list': problem_list,'logined': 1, 'root': root, 'name': request.session['username']}
@@ -46,8 +47,8 @@ def problemset(request):
 
 def problem(request, problem_id):
     problem = Problem.objects.get(pk=problem_id)
-    root = User.objects.filter(username=request.session['username'])[0].root
     if('username' in request.session.keys()):
+        root = User.objects.filter(username=request.session['username'])[0].root
         context = {'problem': problem,'logined': 1, 'root': root, 'name': request.session['username']}
     else:
         context = {'problem': problem,'logined': 0, 'root': 0, 'name': ''}
