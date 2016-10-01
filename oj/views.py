@@ -9,11 +9,20 @@ from contest.models import Contest
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def index(request):
-    
-    if('username' in request.session.keys()):
-        context = {'logined': 1, 'name': request.session['username']}
+    if 'HTTP_X_FORWARDED_FOR' in request.META:
+        ip = request.META['HTTP_X_FORWARDED_FOR']
     else:
-        context = {'logined': 0, 'name': ''}
+        ip = request.META['REMOTE_ADDR']
+    if('username' in request.session.keys()):
+        s = User.objects.filter(username=request.session['username'])[0]
+        obj = json.loads(s.ips)
+        obj.append(ip)
+        s.ips = json.dumps(obj)
+        s.save()
+        
+        context = {'ip': ip, 'logined': 1, 'name': request.session['username']}
+    else:
+        context = {'ip': ip, 'logined': 0, 'name': ''}
     return render(request, 'index.html',context)
    # return HttpResponse("欢迎来到魔法炮OJ！")
 

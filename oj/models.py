@@ -47,6 +47,7 @@ class User(models.Model):
                }
 
     stat = models.TextField(default=stat_default())
+    ips = models.TextField(default=[])
 
     def __str__(self):
         return self.username
