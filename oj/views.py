@@ -72,12 +72,13 @@ def user(request, user_id):
     return render(request, 'user.html', context)
     
 def code(request, submission_id):
+    user = User.objects.filter(username=request.session['username'])[0]
     submission = Submission.objects.get(pk=submission_id)
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     if('username' in request.session.keys()):
-        context = {'nowtime': nowtime, 'submission': submission,'logined': 1, 'name': request.session['username']}
+        context = {'user': user, 'nowtime': nowtime, 'submission': submission,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'nowtime': nowtime, 'submission': submission,'logined': 0, 'name': ''}
+        context = {'user': user, 'nowtime': nowtime, 'submission': submission,'logined': 0, 'name': ''}
     return render(request, 'code.html', context)
 
 def submit(request, **kwargs):

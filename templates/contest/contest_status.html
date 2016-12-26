@@ -67,7 +67,7 @@
     <td align=center>{{submission.memory_used}}</td>
  {% endif %}
 	   
-{% if name == submission.user.username %}
+{% if name == submission.user.username or user.root %}
             <td align=center><a style=" text-decoration: none; color: #005AB5;" href="{% url 'code' submission.id %}" title="">{{submission.language}}</a></td>
 {% else %} <td align=center>{{submission.language}}</td>
 {% endif %}

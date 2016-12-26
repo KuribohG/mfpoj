@@ -25,7 +25,7 @@
 </head>
 <title>查看源码 - {{submission.id}}</title>
 
-{% if name == submission.user.username %}
+{% if name == submission.user.username or user.root %}
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">

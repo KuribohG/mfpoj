@@ -200,7 +200,9 @@ def contest_status(request, contest_id):
     logined = 'username' in request.session.keys()
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
+    user = User.objects.filter(username=request.session['username'])[0]
     context = {
+        'user': user,
         'nowtime': nowtime,
         'contest': contest, 
         'contest_id': contest_id, 
@@ -289,10 +291,11 @@ def contest_problem(request, contest_id, problem_id):
     return render(request, 'contest_problem.html', context)
     
 def code(request, submission_id):
+    user = User.objects.filter(username=request.session['username'])[0]
     submission = Submission.objects.get(pk=submission_id)
     if('username' in request.session.keys()):
-        context = {'submission': submission,'logined': 1, 'name': request.session['username']}
+        context = {'user': user, 'submission': submission,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'submission': submission,'logined': 0, 'name': ''}
+        context = {'user': user, 'submission': submission,'logined': 0, 'name': ''}
     return render(request, 'code.html', context)
 
