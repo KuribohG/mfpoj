@@ -10,12 +10,18 @@
 -->
 </style>
 <title>个人信息 - 魔法炮OJ</title><div class="container">
-Username: {{user.username}} <br>
-Nickname: {{user.nickname}} <br>
-School: {{user.school}} <br>
-Email: {{user.email}} <br>
-Root: {% if user.root == True %}√{% else %}×{% endif %} <br>
+<center>
+<table>
+<font size=4>
+<tr><td width="45%" height="23"><b>Username:</b></td><td width="45%" height="23">{{user.username}} </td></tr>
+<tr><td width="45%" height="23"><b>Nickname:</b> </td><td width="45%" height="23">{{user.nickname}} </td></tr>
+<tr><td width="45%" height="23"><b>School:</b> </td><td width="45%" height="23">{{user.school}} </td></tr>
+<tr><td width="45%" height="23"><b>Email:</b> </td><td width="45%" height="23">{{user.email}} </td></tr>
+<tr><td width="45%" height="23"><b>Root:</b> </td><td width="45%" height="23">{% if user.root == True %}√{% else %}×{% endif %} </td></tr>
+</font>
+</table>
+</center>
 <!-- <font color=#FF0000>PASSWORD: {{user.password}}</font> 蛤蛤<br> -->
-	
+<br>
 {% include "footer.html"%}
 </div>
