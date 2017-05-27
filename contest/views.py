@@ -1,4 +1,4 @@
-import time
+﻿import time
 import json
 
 
@@ -200,18 +200,30 @@ def contest_status(request, contest_id):
     logined = 'username' in request.session.keys()
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
-    user = User.objects.filter(username=request.session['username'])[0]
-    context = {
-        'user': user,
-        'nowtime': nowtime,
-        'contest': contest, 
-        'contest_id': contest_id, 
-        'submission_list': submission_list, 
-        'logined': int(logined),  
-        'root': User.objects.filter(username=request.session['username'])[0].root if logined else 0,
-        'name': request.session['username'] if logined else '',
-        'page_name': 'status',
-    }
+    if(logined):
+        user = User.objects.filter(username=request.session['username'])[0]
+        context = {
+            'user': user,
+            'nowtime': nowtime,
+            'contest': contest, 
+            'contest_id': contest_id, 
+            'submission_list': submission_list, 
+            'logined': int(logined),  
+            'root': User.objects.filter(username=request.session['username'])[0].root,
+            'name': request.session['username'],
+            'page_name': 'status',
+        }
+    else:
+        context = {
+            'nowtime': nowtime,
+            'contest': contest, 
+            'contest_id': contest_id, 
+            'submission_list': submission_list, 
+            'logined': int(logined),  
+            'root': 0,
+            'name': '',
+            'page_name': 'status',
+        }
     return render(request, 'contest_status.html',context)
 def contest_standings(request, contest_id):
     
