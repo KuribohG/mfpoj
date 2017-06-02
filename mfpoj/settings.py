@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'oj.templatetags.displaymarkdowncode', 
     'oj.templatetags.num2string', 
     'oj.templatetags.dot', 
+    'oj.templatetags.quotient',
     'contest.apps.ContestConfig', 
     'oj.apps.OjConfig', 
     'django.contrib.admin',
