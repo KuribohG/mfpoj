@@ -97,3 +97,6 @@ db.sqlite3
 
 # Upload
 upload/
+
+#Swap files
+*.swp
