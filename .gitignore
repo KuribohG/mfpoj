@@ -94,3 +94,6 @@ migrations/
 
 # Sqlite3
 db.sqlite3
+
+# Upload
+upload/
