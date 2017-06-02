@@ -1,4 +1,4 @@
-import time
+﻿import time
 import json
 
 
@@ -201,7 +201,7 @@ def contest_status(request, contest_id):
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
     if(logined):
-        user = User.objects.filter(username=request.session['username'])[0] if logined else 0
+        user = User.objects.filter(username=request.session['username'])[0]
         context = {
             'user': user,
             'nowtime': nowtime,
