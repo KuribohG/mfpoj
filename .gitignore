@@ -98,5 +98,8 @@ db.sqlite3
 # Upload
 upload/
 
-#Swap files
+# Swap files
 *.swp
+
+# Django static generated files
+static/
