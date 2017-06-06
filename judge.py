@@ -76,6 +76,7 @@ def run_one_testcase(testcase, command):
         'fd_out': fd_out.fileno(), 
         'timelimit': testcase.time_limit,
         'memorylimit': testcase.memory_limit * 1024,
+        'trace': True,
     }
 
     rst = lorun.run(runcfg)
