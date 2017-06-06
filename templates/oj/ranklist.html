@@ -29,7 +29,11 @@
          {% if user in user_list %}
 	      <tr>
 	      <td align="center">{{ forloop.counter }}</td>
-	      <td align="center"><a style=" text-decoration: none; color: #444;"href="{% url 'user' user.username %}">{{user.username}}</a></td>
+			{% if user.root == 1 %}
+				<td align="center"><a style=" text-decoration: none; color: #ff0000;"href="{% url 'user' user.username %}">{{user.username}}</a></td>
+			{% else %}
+				<td align="center"><a style=" text-decoration: none; color: #444;"href="{% url 'user' user.username %}">{{user.username}}</a></td>
+			{% endif %}
 	      <td align="center">{{user.nickname}}</td>
 	      <td align="center">{{user.ac}}</td>
 	      <td align="center">{{user.submit}}</td>
