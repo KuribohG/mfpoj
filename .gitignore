@@ -102,4 +102,3 @@ upload/
 *.swp
 
 # Django static generated files
-static/

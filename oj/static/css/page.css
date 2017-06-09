@@ -1,0 +1,189 @@
+.middle {
+  text-align: center;
+}
+.middle  ul {
+  width: 100%;
+}
+
+.middle {
+  width: 32rem;
+}
+
+.middle ul, li {
+  list-style: none;
+  display: inline;
+  padding-left: 0px;
+}
+
+.middle li {
+  counter-increment: pagination;
+}
+.middle li:hover a {
+  color: #fdfdfd;
+  background-color: #dda0dd;
+  border: solid 1px #1d1f20;
+}
+.middle li.active a {
+  color: #fdfdfd;
+  background-color: #9932cc;
+  border: solid 1px #1d1f20;
+}
+.middle li:first-child {
+  float: left;
+}
+.middle li:first-child a:after {
+  content: "Previous";
+}
+.middle li:nth-child(2) {
+  counter-reset: pagination;
+}
+.middle li:last-child {
+  float: right;
+}
+.middle li:last-child a:after {
+  content: "Next";
+}
+.middle li a {
+  border: solid 1px #d6d6d6;
+  border-radius: 0.2rem;
+  color: #7d7d7d;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  padding: 0.5rem 0.9rem;
+}
+.middle li a:after {
+  content: " " counter(pagination) " ";
+}
+
+.middle li a {
+  display: none;
+}
+.middle li:first-child a {
+  display: inline-block;
+}
+.middle li:first-child a:after {
+  content: "<";
+}
+.middle li:last-child a {
+  display: inline-block;
+}
+.middle li:last-child a:after {
+  content: ">";
+}
+.middle li:nth-child(2) a {
+  display: inline-block;
+}
+.middle li:nth-child(3) a {
+  display: inline-block;
+}
+.middle li:nth-child(4) a {
+  display: inline-block;
+}
+.middle li:nth-child(5) a {
+  display: inline-block;
+}
+.middle li:nth-child(6) a {
+  display: inline-block;
+}
+.middle li:nth-last-child(2) a {
+  display: inline-block;
+}
+.middle li:nth-last-child(3) {
+  display: inline-block;
+}
+.middle li:nth-last-child(3):after {
+  padding: 0 1rem;
+  content: "...";
+}
+
+.large {
+  text-align: center;
+}
+.large  ul {
+  width: 100%;
+}
+
+.large {
+  width: 32rem;
+}
+
+.large ul, li {
+  list-style: none;
+  display: inline;
+  padding-left: 0px;
+}
+
+.large li {
+  counter-increment: pagination;
+}
+.large li:hover a {
+  color: #fdfdfd;
+  background-color: #dda0dd;
+  border: solid 1px #1d1f20;
+}
+.large li.active a {
+  color: #fdfdfd;
+  background-color: #9932cc;
+  border: solid 1px #1d1f20;
+}
+.large li:first-child {
+  float: left;
+}
+.large li:first-child a:after {
+  content: "Previous";
+}
+.large li:nth-child(2) {
+  counter-reset: pagination;
+}
+.large li:last-child {
+  float: right;
+}
+.large li:last-child a:after {
+  content: "Next";
+}
+.large li a {
+  border: solid 1px #d6d6d6;
+  border-radius: 0.2rem;
+  color: #7d7d7d;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  padding: 0.5rem 0.9rem;
+}
+.large li a:after {
+  content: " " counter(pagination) " ";
+}
+
+.large li a {
+  display: none;
+}
+.large li:first-child a {
+  display: inline-block;
+}
+.large li:first-child a:after {
+  content: "<";
+}
+.large li:last-child a {
+  display: inline-block;
+}
+.large li:last-child a:after {
+  content: ">";
+}
+.large li:nth-child(2) a {
+  display: inline-block;
+}
+.large li:nth-child(3) a {
+  display: inline-block;
+}
+.large li:nth-child(4) a {
+  display: inline-block;
+}
+.large li:nth-child(5) a {
+  display: inline-block;
+}
+.large li:nth-child(6) a {
+  display: inline-block;
+}
