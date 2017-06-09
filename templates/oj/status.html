@@ -94,22 +94,59 @@
             </td>
   
 </table>
-	<!--分页大法开启-->
- {% if submission_list.has_previous %}
-        <a class='paginator' title='上一页' href='?page={{ submission_list.previous_page_number }}'><span>&lt;&lt;</span></a>
- {% endif %}
- {% for page in submission_list.paginator.page_range %}
-     {% if page == submission_list.number %}
-         <a class='paginator_current' title='当前页:{{ page }}'><span>{{ page }}</span></a>
-     {% else %}
-         <a class='paginator' href='?page={{ page }}' title='{{ page }}'><span>{{ page }}</span></a>
-     {% endif %}
-     
- {% endfor %}
- {% if submission_list.has_next %}
-     <a class='paginator' title='下一页' href='?page={{ submission_list.next_page_number }}'><span>&gt;&gt;</span></a>
- {% endif %}
-	<!--分页大法结束-->
+
+{% if submission_list.paginator.page_range|length <= 5 %} 
+	<link href="../../static/css/page.css" rel="stylesheet" type="text/css" />
+	<div class="container large">
+	  <div class="pagination">
+	      <ul>
+	     	 {% if submission_list.has_previous %}
+	         	<li><a title='上一页' href='?page={{ submission_list.previous_page_number }}'></a></li>
+			 {% else %}
+	         	<li></li>
+			 {% endif %}
+			 {% for page in submission_list.paginator.page_range %}
+			     {% if page == submission_list.number %}
+			     	 <li class="active"><a title='当前页:{{ page }}'></a></li>
+			     {% else %}
+			     	 <li><a title='{{ page }}' href='?page={{ page }}' title='{{ page }}'></a></li>
+			     {% endif %}
+			 {% endfor %}
+			 {% if submission_list.has_next %}
+			   	 <li><a title='下一页' href='?page={{ submission_list.next_page_number }}'></a></li>
+ 			 {% else %}
+			     <li></li>
+			 {% endif %}
+	      </ul>
+	  </div>
+	</div>
+{% else %} 
+	<link href="../../static/css/page.css" rel="stylesheet" type="text/css" />
+	<div class="container middle">
+	  <div class="pagination">
+	      <ul>
+	     	 {% if submission_list.has_previous %}
+	         	<li><a title='上一页' href='?page={{ submission_list.previous_page_number }}'></a></li>
+			 {% else %}
+	         	<li></li>
+			 {% endif %}
+			 {% for page in submission_list.paginator.page_range %}
+			     {% if page == submission_list.number %}
+			     	 <li class="active"><a title='当前页:{{ page }}'></a></li>
+			     {% else %}
+			     	 <li><a title='{{ page }}' href='?page={{ page }}' title='{{ page }}'></a></li>
+			     {% endif %}
+			 {% endfor %}
+			 {% if submission_list.has_next %}
+			   	 <li><a title='下一页' href='?page={{ submission_list.next_page_number }}'></a></li>
+ 			 {% else %}
+			     <li></li>
+			 {% endif %}
+	      </ul>
+	  </div>
+	</div>
+{% endif %}
+
 {% include "footer.html"%}
 </div>
 <p>&nbsp;</p>
