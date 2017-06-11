@@ -94,6 +94,7 @@
             </td>
   
 </table>
+
 <style type="text/css">
 .center{text-align:center;}
 </style> 
@@ -107,8 +108,8 @@
 			 {% endif %}
 			 {% for page in submission_list.paginator.page_range %}
 			     {% if page == submission_list.number %}
-			     	 <li><a title='当前页:{{ page }}'>{{page}}</a></li>
-			     {% elif page >= L and page <= R%}
+			     	 <li class="active"><a title='当前页:{{ page }}'>{{page}}</a></li>
+			     {% elif page >= page_l and page <= page_r %}
 			     	 <li><a title='{{ page }}' href='?page={{ page }}' title='{{ page }}'>{{page}}</a></li>
 			     {% else %}
 			     {% endif %}

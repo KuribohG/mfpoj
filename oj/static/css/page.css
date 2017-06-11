@@ -1,3 +1,12 @@
-.gl_wrap li div a .sel{display:block;float:left;height:22px;line-height:22px;color:#666;padding:0 8px;background:#66a800}
-.gl_wrap li div a .unsel{display:block;float:left;height:22px;line-height:22px;color:#666;padding:0 8px}
-
+.gl_wrap li.hover a {color: #fdfdfd;background-color: #dda0dd;border: solid 1px #1d1f20;}		
+.gl_wrap li.active a {color: #fdfdfd;background-color: #9932cc;border: solid 1px #1d1f20;}
+.gl_wrap li a {
+  border: solid 1px #d6d6d6;
+  border-radius: 0.2rem;
+  color: #7d7d7d;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+  padding: 0.5rem 0.9rem;
+}

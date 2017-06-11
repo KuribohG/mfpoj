@@ -36,6 +36,8 @@ def problemset(request):
         nowpage = request.GET['page']
     else:
         nowpage = 1
+    page_l = int(nowpage) - 2
+    page_r = int(nowpage) + 2
     try:
         problem_list = paginator.page(nowpage) 
     except PageNotAnInteger:
@@ -49,9 +51,9 @@ def problemset(request):
         s = User.objects.filter(username=request.session['username'])[0]
         obj = json.loads(s.stat)
         root = s.root
-        context = {'stat': obj,'problem_list': problem_list,'logined': 1, 'root': root, 'name': request.session['username']}
+        context = {'page_l':page_l, 'page_r':page_r, 'stat': obj,'problem_list': problem_list,'logined': 1, 'root': root, 'name': request.session['username']}
     else:
-        context = {'problem_list': problem_list,'logined': 0, 'root': 0, 'name': ''}
+        context = {'page_l':page_l, 'page_r':page_r, 'problem_list': problem_list,'logined': 0, 'root': 0, 'name': ''}
     return render(request, 'problemset.html', context)
 
 def problem(request, problem_id):
@@ -227,6 +229,8 @@ def ranklist(request):
         nowpage = request.GET['page']
     else:
         nowpage = 1
+    page_l = int(nowpage) - 2
+    page_r = int(nowpage) + 2
     try:
         user_list = paginator.page(nowpage) 
     except PageNotAnInteger:
@@ -235,9 +239,9 @@ def ranklist(request):
         user_list = paginator.page(paginator.num_pages)
     #分页大法结束
     if('username' in request.session.keys()):
-        context = {'all_user_list':all_user_list,'user_list':user_list,'logined': 1, 'name': request.session['username']}
+        context = {'page_l':page_l, 'page_r':page_r, 'all_user_list':all_user_list,'user_list':user_list,'logined': 1, 'name': request.session['username']}
     else:
-        context = {'all_user_list':all_user_list,'user_list':user_list,'logined': 0, 'name': ''}
+        context = {'page_l':page_l, 'page_r':page_r, 'all_user_list':all_user_list,'user_list':user_list,'logined': 0, 'name': ''}
     return render(request, 'ranklist.html',context)
 
 def status(request):
@@ -269,9 +273,9 @@ def status(request):
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     if('username' in request.session.keys()):
         user = User.objects.filter(username=request.session['username'])[0]
-        context = {'L':page_l,'R':page_r,'nowtime': nowtime, 'submission_list': submission_list,'logined': 1, 'root': user.root, 'name': request.session['username']}
+        context = {'page_l':page_l, 'page_r':page_r, 'nowtime': nowtime, 'submission_list': submission_list,'logined': 1, 'root': user.root, 'name': request.session['username']}
     else:
-        context = {'L':page_l,'R':page_r,'nowtime': nowtime, 'submission_list': submission_list,'logined': 0, 'root': 0,	'name': ''}
+        context = {'page_l':page_l, 'page_r':page_r, 'nowtime': nowtime, 'submission_list': submission_list,'logined': 0, 'root': 0,	'name': ''}
     return render(request, 'status.html',context)
 
 def modify(request):

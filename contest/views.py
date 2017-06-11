@@ -28,8 +28,12 @@ def contests(request):
 
     logined = 'username' in request.session.keys()
     nowpage = request.GET['page'] if 'page' in request.GET.keys() else 1
+    page_l = int(nowpage) - 2
+    page_r = int(nowpage) + 2
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     context = {
+    	'page_l':page_l,
+		'page_r':page_r, 
         'nowtime': nowtime,
         'contest_list': paginate(contest_list, 20, nowpage), 
         'logined': int(logined), 
@@ -137,6 +141,8 @@ def contest(request, contest_id):
         nowpage = request.GET['page']
     else:
         nowpage = 1
+    page_l = int(nowpage) - 2
+    page_r = int(nowpage) + 2
     try:
         problem_list = paginator.page(nowpage) 
     except PageNotAnInteger:
@@ -157,6 +163,8 @@ def contest(request, contest_id):
             contestuser = contest.contestuser_set.all().filter(user=user)[0]
             obj = json.loads(contestuser.stat)
             context = {
+            	'page_l':page_l,
+				'page_r':page_r, 
                 'nowtime': nowtime,
                 'stat': obj,
                 'join': 1,
@@ -169,6 +177,8 @@ def contest(request, contest_id):
             }
         else:
             context = {
+            	'page_l':page_l,
+				'page_r':page_r, 
                 'nowtime': nowtime,
                 'join': 0,
                 'contest': contest, 
@@ -204,6 +214,8 @@ def contest_status(request, contest_id):
         nowpage = request.GET['page']
     else:
         nowpage = 1
+    page_l = int(nowpage) - 2
+    page_r = int(nowpage) + 2
     try:
         submission_list = paginator.page(nowpage) 
     except PageNotAnInteger:
@@ -218,6 +230,8 @@ def contest_status(request, contest_id):
     if(logined):
         user = User.objects.filter(username=request.session['username'])[0]
         context = {
+        	'page_l':page_l,
+			'page_r':page_r, 
             'user': user,
             'nowtime': nowtime,
             'contest': contest, 
@@ -272,6 +286,8 @@ def contest_standings(request, contest_id):
         nowpage = request.GET['page']
     else:
         nowpage = 1
+    page_l = int(nowpage) - 2
+    page_r = int(nowpage) + 2
     try:
         user_list = paginator.page(nowpage) 
     except PageNotAnInteger:
@@ -283,6 +299,8 @@ def contest_standings(request, contest_id):
     nowtime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()+3600*8))
     
     context = {
+    	'page_l':page_l,
+		'page_r':page_r, 
         'nowtime': nowtime,
         'contest': contest, 
         'contest_id': contest_id, 
