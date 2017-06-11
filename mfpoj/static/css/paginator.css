@@ -1,3 +1,8 @@
+.gl_wrap ul, li {
+  list-style: none;
+  display: inline;
+  padding-left: 0px;
+}
 .gl_wrap li:hover a {
 	color: #fdfdfd;
 	background-color: #dda0dd;

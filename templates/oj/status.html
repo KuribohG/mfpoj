@@ -101,7 +101,7 @@
 	<link href="../../static/css/paginator.css" rel="stylesheet" type="text/css" />
 	<div class="gl_wrap">
 	<div class="center">
-	  <div class="pagination">
+	  <div class="pagination"><ul>
 	     	 {% if submission_list.has_previous %}
 	         	<li><a title='上一页' href='?page={{ submission_list.previous_page_number }}'><</a></li>
 			 {% else %}
@@ -117,7 +117,7 @@
 			 {% if submission_list.has_next %}
 			   	 <li><a title='下一页' href='?page={{ submission_list.next_page_number }}'>></a></li>
  			 {% else %}
-			 {% endif %}
+			 {% endif %}</ul>
 	  </div>
 	</div>
 	</div>
