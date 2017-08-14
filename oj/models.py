@@ -4,8 +4,8 @@ from django.db import models
 class Problem(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()
-    submit = models.IntegerField()
-    ac = models.IntegerField()
+    submit = 0
+    ac = 0
     hide = models.BooleanField(default=False)
 
     def __str__(self):
