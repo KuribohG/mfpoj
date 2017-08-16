@@ -66,32 +66,41 @@ def get_status_from_result(result):
 		return "System Error"
 	return max([obj['result'] for obj in result])
 
-def run_one_testcase(testcase, command):
-	fd_in = open(testcase.input.file.name, 'r')
-	fd_out = open("/tmp/test.out", 'w')
-
-	runcfg = {
-		'args': [command], 
-		'fd_in': fd_in.fileno(), 
-		'fd_out': fd_out.fileno(), 
-		'timelimit': testcase.time_limit,
-		'memorylimit': testcase.memory_limit * 1024,
-		# 'trace': True,
+def run_one_testcase(testcase):
+	os.popen("echo "+testcase.input.file.name)
+	#command = exec_file
+	os.system("cp "+testcase.input.file.name+" /tmp/input.in")
+	print(testcase.time_limit)
+	res=os.popen("cp /usr/bin/time /tmp/time;docker run -v /tmp:/mnt -m%dM ubuntu:17.04 /bin/bash -c \"cd /mnt;ulimit -t %d; date +\'startoifajdsnvcmewrlk %%s%%N\'; { ./time -f \'memoryeiurojlkfdsjorewlkmfnaowrtoinalkdsf %%M\' ./test <input.in >output.out; } 2>&1; date +\'endnvajdfsdoifamfeie %%s%%N\'\""%((testcase.memory_limit+100)*1024,testcase.time_limit+1)).readlines() 
+	print(res)
+	# os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out"
+	rst={
+		'result':'','timeused':-1,'memoryused':-1
 	}
-
-	rst = lorun.run(runcfg)
-
-	fd_in.close()
-	fd_out.close()
-
-	rst['result'] = RESULT_STR[rst['result']]
-	if rst['result'] == 'Accepted':
-		fd_in = open(testcase.output.file.name, 'r')
-		fd_out = open("/tmp/test.out", 'r')
-		rst['result'] = check_output(fd_in, fd_out)
-		# check_rst = lorun.check(fd_in.fileno(), fd_out.fileno())
-		# rst['result'] = RESULT_STR[check_rst]
-
+	stt=0
+	edt=-1
+	print (len(res))
+	for lin in res:
+		lst=lin.split()
+		print (lst)
+		if lst[0]=='memoryeiurojlkfdsjorewlkmfnaowrtoinalkdsf':
+			rst['memoryused']=int(lst[1])
+		if lst[0]=='startoifajdsnvcmewrlk':
+			stt=int(lst[1])
+		if lst[0]=='endnvajdfsdoifamfeie':
+			edt=int(lst[1])
+			rst['timeused']=(edt-stt)/1000000
+	if rst['memoryused']>testcase.memory_limit*1024:
+		rst['result']='Memory Limit Exceeded'
+	elif rst['timeused']>testcase.time_limit*1000:
+		rst['result']='Time Limit Exceeded'
+	elif len(res)!=3:
+		rst['result']='Runtime Error'
+	else:
+		if check_output(testcase.output.file.name)==1:
+			rst['result']='Accepted'
+		else:
+			rst['result']='Wrong Answer'
 	return rst
 
 def run_testcases(waiting, exec_file):
@@ -99,46 +108,12 @@ def run_testcases(waiting, exec_file):
 	language = submission.language
 
 	result = []
-	command = ""
 	
 	if language == "C++":
 		testcases = len(submission.problem.testcase_set.all())
 		ac = 0
 		for testcase in submission.problem.testcase_set.all():
-			os.popen("echo "+testcase.input.file.name)
-			#command = exec_file
-			os.system("cp "+testcase.input.file.name+" /tmp/input.in")
-			print(testcase.time_limit)
-			res=os.popen("cp /usr/bin/time /tmp/time;docker run -v /tmp:/mnt -m%dM ubuntu:15.10 /bin/bash -c \"cd /mnt;ulimit -t %d; date +\'startoifajdsnvcmewrlk %%s%%N\'; { ./time -f \'memoryeiurojlkfdsjorewlkmfnaowrtoinalkdsf %%M\' ./test <input.in >output.out; } 2>&1; date +\'endnvajdfsdoifamfeie %%s%%N\'\""%((testcase.memory_limit+100)*1024,testcase.time_limit+1)).readlines() 
-			# os.system(exec_file + " < " + testcase.input.file.name + " > /tmp/test.out"
-			rst={
-				'result':'','timeused':-1,'memoryused':-1
-			}
-			stt=0
-			edt=-1
-			print (len(res))
-			for lin in res:
-				lst=lin.split()
-				print (lst)
-				if lst[0]=='memoryeiurojlkfdsjorewlkmfnaowrtoinalkdsf':
-					rst['memoryused']=int(lst[1])
-				if lst[0]=='startoifajdsnvcmewrlk':
-					stt=int(lst[1])
-				if lst[0]=='endnvajdfsdoifamfeie':
-					edt=int(lst[1])
-					rst['timeused']=(edt-stt)/1000000
-			if rst['memoryused']>testcase.memory_limit*1024:
-				rst['result']='Memory Limit Exceeded'
-			elif rst['timeused']>testcase.time_limit*1000:
-				rst['result']='Time Limit Exceeded'
-			elif len(res)!=3:
-				rst['result']='Runtime Error'
-			else:
-				if check_output(testcase.output.file.name)==1:
-					rst['result']='Accepted'
-				else:
-					rst['result']='Wrong Answer'
-			#rst = run_one_testcase(testcase, command)
+			rst = run_one_testcase(testcase)
 			if rst['result'] == 'Accepted' :
 				ac += 1
 			result.append(rst)
@@ -212,14 +187,12 @@ def solve_CE():
 
 while True:
 	waiting_list = Waiting.objects.all()
-	print ("hh")
 	if waiting_list:
 		for waiting in waiting_list:
 		
 			s = waiting.submission.user
 			#s.waiting -= 1
 			#s.save()
-			print ("!")
 			exec_file = judge(waiting)
 			if exec_file != "Compile Error":
 				run_testcases(waiting, exec_file)
