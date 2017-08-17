@@ -33,7 +33,8 @@ def compile_cpp(waiting):
         output = open("/tmp/test.cpp", 'w')
         output.write(source)
         output.close()
-        os.system("rm -rf /tmp/test;ulimit -t 5;g++ -o /tmp/test /tmp/test.cpp;ulimit -t unlimited");
+        os.system("rm -rf /tmp/test")
+        os.system("timeout 5 g++ -o /tmp/test /tmp/test.cpp")
         if os.path.exists("/tmp/test"):
             return True
         else:
