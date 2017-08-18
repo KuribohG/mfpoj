@@ -3,11 +3,9 @@ import os
 import time
 import json
 
-import django
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mfpoj.settings'
+import django
 django.setup()
-
-import lorun
 
 from contest.models import Contest, ContestProblem, ContestSubmission, ContestUser
 from oj.models import Problem, Submission, Waiting, User
